@@ -1,0 +1,79 @@
+{
+  "coke_upright": {
+    "sr": 0.8,
+    "n": 25,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 506.2
+  },
+  "coke_lr_switch": {
+    "sr": 0.88,
+    "n": 25,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 498.8
+  },
+  "coke_laid_vert": {
+    "sr": 0.52,
+    "n": 25,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 486.4
+  },
+  "move_near": {
+    "sr": 0.5833333333333334,
+    "n": 60,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 1185.4
+  },
+  "drawer_open_top_pruneonly": {
+    "sr": 0.7777777777777778,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 250.7
+  },
+  "drawer_open_mid_pruneonly": {
+    "sr": 0.8888888888888888,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 243.6
+  },
+  "drawer_open_bot_pruneonly": {
+    "sr": 0.1111111111111111,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 247.0
+  },
+  "drawer_close_top_pruneonly": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 242.0
+  },
+  "drawer_close_mid_pruneonly": {
+    "sr": 0.8888888888888888,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 241.1
+  },
+  "drawer_close_bot_pruneonly": {
+    "sr": 0.8888888888888888,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 248.3
+  },
+  "put_in_drawer_pruneonly": {
+    "sr": 0.1111111111111111,
+    "n": 9,
+    "kept": 153.0,
+    "prune_pct": 40.2,
+    "secs": 422.2
+  }
+}

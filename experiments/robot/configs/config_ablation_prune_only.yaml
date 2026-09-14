@@ -1,0 +1,43 @@
+# Ablation: Pruning-only (no attention biasing)
+# Tests the contribution of the attention biasing stage
+model_path: "moojink/openvla-7b-oft-finetuned-libero-spatial"
+model_family: "openvla"
+pretrained_checkpoint: null
+
+task_suite_name: "libero_spatial"
+task_id: 0-9
+num_episodes: 10
+center_crop: true
+
+# SAM pruning — ENABLED
+use_sam: true
+sam_backend: "efficienttam"
+sam_checkpoint: "EfficientTAM/checkpoints"
+sam_model_type: "efficienttam_s"
+efficienttam_base_dir: "EfficientTAM"
+top_k_points: 8
+num_neg_points: 3
+mask_to_patch_threshold: 0.3
+target_extraction: "simple"
+use_weighted_similarity: true
+use_spatial_clustering: true
+k_initial: 50
+dbscan_eps: 2.0
+min_cluster_size: 3
+
+# Attention biasing — DISABLED (ablation)
+use_attention_bias: false
+
+# No OOD perturbation
+ood_enabled: false
+
+# Action head
+use_diffusion: false
+use_proprio: true
+use_film: false
+
+# Logging
+save_visualizations: false
+output_dir: "./eval_results/ablation_prune_only"
+rollout_dir: "./rollouts/ablation_prune_only"
+seed: 7

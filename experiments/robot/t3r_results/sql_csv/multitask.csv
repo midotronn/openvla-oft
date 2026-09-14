@@ -1,0 +1,13 @@
+task,cond,tokens,sr
+move_near,base,256,0.65
+move_near,adp,192,0.733
+move_near,ours_k75,192,0.6
+move_near,ours_k50,128,0.467
+move_near,team,80,0.6
+move_near,ours_k3125,80,0.367
+drawer,base,256,0.556
+drawer,adp,192,0.556
+drawer,ours_k75,192,0.778
+drawer,ours_k50,128,0.333
+drawer,team,80,0.556
+drawer,ours_k3125,80,0.444

@@ -1,0 +1,16 @@
+cond,orient,sr
+prune_only,up,0.84
+prune_only,lr,0.76
+prune_only,lv,0.56
+grid,up,0.68
+grid,lr,0.52
+grid,lv,0.76
+rc1,up,0.44
+rc1,lr,0.6
+rc1,lv,0.48
+grid_g6,up,0.84
+grid_g6,lr,0.68
+grid_g6,lv,0.56
+grid_g5,up,0.84
+grid_g5,lr,0.72
+grid_g5,lv,0.6

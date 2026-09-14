@@ -1,0 +1,16 @@
+cell,sr,kept,secs
+adp/upright,0.84,192.0,367.7
+adp/lr_switch,0.92,192.0,354.1
+adp/laid_vertically,0.6,192.0,357.4
+team/upright,0.8,80.0,362.6
+team/lr_switch,0.8,80.0,365.5
+team/laid_vertically,0.6,80.0,364.2
+base/upright,0.84,256.0,355.0
+base/lr_switch,0.92,256.0,358.1
+base/laid_vertically,0.64,256.0,369.7
+ours_bal/upright,0.88,204.0,414.0
+ours_bal/lr_switch,0.88,204.0,384.5
+ours_bal/laid_vertically,0.76,204.0,387.2
+ours_aggr/upright,0.84,64.0,366.3
+ours_aggr/lr_switch,0.72,64.0,364.9
+ours_aggr/laid_vertically,0.4,64.0,372.7

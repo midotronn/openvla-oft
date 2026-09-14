@@ -1,0 +1,13 @@
+cond,orient,sr
+prune_only,up,0.84
+prune_only,lr,0.76
+prune_only,lv,0.56
+ab_str0.8,up,0.84
+ab_str0.8,lr,0.68
+ab_str0.8,lv,0.6
+ab_str1.0,up,0.84
+ab_str1.0,lr,0.72
+ab_str1.0,lv,0.56
+ab_str1.5,up,0.88
+ab_str1.5,lr,0.6
+ab_str1.5,lv,0.56

@@ -1,0 +1,212 @@
+{
+  "coke_upright/adp_native": {
+    "sr": 0.88,
+    "n": 25,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 450.0
+  },
+  "coke_upright/team_native": {
+    "sr": 0.92,
+    "n": 25,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 447.2
+  },
+  "coke_upright/team_topk32": {
+    "sr": 0.92,
+    "n": 25,
+    "kept": 32.0,
+    "prune_pct": 87.5,
+    "secs": 437.0
+  },
+  "coke_upright/team_topk16": {
+    "sr": 0.28,
+    "n": 25,
+    "kept": 16.0,
+    "prune_pct": 93.8,
+    "secs": 435.8
+  },
+  "coke_lr_switch/adp_native": {
+    "sr": 0.88,
+    "n": 25,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 468.2
+  },
+  "coke_lr_switch/team_native": {
+    "sr": 0.8,
+    "n": 25,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 426.5
+  },
+  "coke_lr_switch/team_topk32": {
+    "sr": 0.64,
+    "n": 25,
+    "kept": 32.0,
+    "prune_pct": 87.5,
+    "secs": 451.7
+  },
+  "coke_lr_switch/team_topk16": {
+    "sr": 0.52,
+    "n": 25,
+    "kept": 16.0,
+    "prune_pct": 93.8,
+    "secs": 436.4
+  },
+  "coke_laid_vert/adp_native": {
+    "sr": 0.68,
+    "n": 25,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 442.2
+  },
+  "coke_laid_vert/team_native": {
+    "sr": 0.56,
+    "n": 25,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 423.8
+  },
+  "coke_laid_vert/team_topk32": {
+    "sr": 0.48,
+    "n": 25,
+    "kept": 32.0,
+    "prune_pct": 87.5,
+    "secs": 422.4
+  },
+  "coke_laid_vert/team_topk16": {
+    "sr": 0.36,
+    "n": 25,
+    "kept": 16.0,
+    "prune_pct": 93.8,
+    "secs": 413.0
+  },
+  "move_near/adp_native": {
+    "sr": 0.7,
+    "n": 60,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 1098.9
+  },
+  "move_near/team_native": {
+    "sr": 0.5833333333333334,
+    "n": 60,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 1076.9
+  },
+  "move_near/team_topk32": {
+    "sr": 0.4166666666666667,
+    "n": 60,
+    "kept": 32.0,
+    "prune_pct": 87.5,
+    "secs": 1016.2
+  },
+  "move_near/team_topk16": {
+    "sr": 0.11666666666666667,
+    "n": 60,
+    "kept": 16.0,
+    "prune_pct": 93.8,
+    "secs": 1035.2
+  },
+  "drawer_open_top/adp_native": {
+    "sr": 0.6666666666666666,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 234.3
+  },
+  "drawer_open_top/team_native": {
+    "sr": 0.6666666666666666,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 222.2
+  },
+  "drawer_open_mid/adp_native": {
+    "sr": 0.7777777777777778,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 230.2
+  },
+  "drawer_open_mid/team_native": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 232.1
+  },
+  "drawer_open_bot/adp_native": {
+    "sr": 0.5555555555555556,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 233.9
+  },
+  "drawer_open_bot/team_native": {
+    "sr": 0.2222222222222222,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 226.5
+  },
+  "drawer_close_top/adp_native": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 231.6
+  },
+  "drawer_close_top/team_native": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 233.3
+  },
+  "drawer_close_mid/adp_native": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 234.2
+  },
+  "drawer_close_mid/team_native": {
+    "sr": 1.0,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 225.2
+  },
+  "drawer_close_bot/adp_native": {
+    "sr": 0.6666666666666666,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 235.7
+  },
+  "drawer_close_bot/team_native": {
+    "sr": 0.8888888888888888,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 218.8
+  },
+  "put_in_drawer/adp_native": {
+    "sr": 0.0,
+    "n": 9,
+    "kept": 192.0,
+    "prune_pct": 25.0,
+    "secs": 381.8
+  },
+  "put_in_drawer/team_native": {
+    "sr": 0.0,
+    "n": 9,
+    "kept": 80.0,
+    "prune_pct": 68.8,
+    "secs": 372.5
+  }
+}

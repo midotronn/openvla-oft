@@ -1,0 +1,17 @@
+unit,method,sr,tokens
+stack_cube,base,0.0,256
+stack_cube,t3r_orig,0.0,64
+stack_cube,adp64,0.042,64
+stack_cube,team64,0.0,64
+carrot_on_plate,base,0.125,256
+carrot_on_plate,t3r_orig,0.0,64
+carrot_on_plate,adp64,0.25,64
+carrot_on_plate,team64,0.083,64
+spoon_on_towel,base,0.125,256
+spoon_on_towel,t3r_orig,0.125,64
+spoon_on_towel,adp64,0.125,64
+spoon_on_towel,team64,0.25,64
+eggplant_in_basket,base,0.167,256
+eggplant_in_basket,t3r_orig,0.042,64
+eggplant_in_basket,adp64,0.0,64
+eggplant_in_basket,team64,0.083,64

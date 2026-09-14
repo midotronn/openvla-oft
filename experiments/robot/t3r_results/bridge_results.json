@@ -1,0 +1,30 @@
+{
+  "stack_cube/base": {
+    "sr": 0.0,
+    "n": 24,
+    "kept": 256.0,
+    "prune_pct": 0.0,
+    "secs": 551.1
+  },
+  "carrot_on_plate/base": {
+    "sr": 0.125,
+    "n": 24,
+    "kept": 256.0,
+    "prune_pct": 0.0,
+    "secs": 560.2
+  },
+  "spoon_on_towel/base": {
+    "sr": 0.125,
+    "n": 24,
+    "kept": 256.0,
+    "prune_pct": 0.0,
+    "secs": 560.7
+  },
+  "eggplant_in_basket/base": {
+    "sr": 0.16666666666666666,
+    "n": 24,
+    "kept": 256.0,
+    "prune_pct": 0.0,
+    "secs": 569.9
+  }
+}

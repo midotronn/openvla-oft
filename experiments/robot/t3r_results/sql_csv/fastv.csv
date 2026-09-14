@@ -1,0 +1,15 @@
+suite,unit,sr,n,kept,prune_pct
+google,coke_upright,0.88,25,154.0,40.0
+google,coke_lr_switch,0.88,25,154.0,40.0
+google,coke_laid_vert,0.56,25,154.0,40.0
+google,move_near,0.6333,60,154.0,40.0
+google,drawer_open_top,0.5556,9,154.0,40.0
+google,drawer_open_mid,0.8889,9,154.0,40.0
+google,drawer_open_bot,0.7778,9,154.0,40.0
+google,drawer_close_top,1.0,9,154.0,40.0
+google,drawer_close_mid,0.8889,9,154.0,40.0
+google,drawer_close_bot,1.0,9,154.0,40.0
+bridge,stack_cube,0.0,24,154.0,40.0
+bridge,carrot_on_plate,0.25,24,154.0,40.0
+bridge,spoon_on_towel,0.2917,24,154.0,40.0
+bridge,eggplant_in_basket,0.0833,24,154.0,40.0

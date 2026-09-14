@@ -1,0 +1,30 @@
+{
+  "stack_cube": {
+    "sr": 0.0,
+    "n": 24,
+    "kept_img": 154.0,
+    "prune_pct": 39.8,
+    "secs": 546.7
+  },
+  "carrot_on_plate": {
+    "sr": 0.25,
+    "n": 24,
+    "kept_img": 154.0,
+    "prune_pct": 39.8,
+    "secs": 566.7
+  },
+  "spoon_on_towel": {
+    "sr": 0.2916666666666667,
+    "n": 24,
+    "kept_img": 154.0,
+    "prune_pct": 39.8,
+    "secs": 573.5
+  },
+  "eggplant_in_basket": {
+    "sr": 0.08333333333333333,
+    "n": 24,
+    "kept_img": 154.0,
+    "prune_pct": 39.8,
+    "secs": 585.9
+  }
+}

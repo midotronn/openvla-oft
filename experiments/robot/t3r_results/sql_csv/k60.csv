@@ -1,0 +1,12 @@
+unit,sr,tokens,prune_pct
+coke_upright,0.8,153,40.0
+coke_lr_switch,0.88,153,40.0
+coke_laid_vert,0.52,153,40.0
+move_near,0.583,153,40.0
+drawer_open_top,0.778,153,40.0
+drawer_open_mid,0.889,153,40.0
+drawer_open_bot,0.111,153,40.0
+drawer_close_top,1.0,153,40.0
+drawer_close_mid,0.889,153,40.0
+drawer_close_bot,0.889,153,40.0
+put_in_drawer,0.111,153,40.0

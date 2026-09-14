@@ -1,0 +1,16 @@
+cell,sr
+base/upright,0.8
+base/lr_switch,0.84
+base/laid_vertically,0.64
+team/upright,0.8
+team/lr_switch,0.8
+team/laid_vertically,0.6
+ours_aggr/upright,0.88
+ours_aggr/lr_switch,0.72
+ours_aggr/laid_vertically,0.56
+ours_aggr_sf/upright,0.64
+ours_aggr_sf/lr_switch,0.44
+ours_aggr_sf/laid_vertically,0.44
+ours_aggr_sfb/upright,0.6
+ours_aggr_sfb/lr_switch,0.32
+ours_aggr_sfb/laid_vertically,0.44
