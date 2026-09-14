@@ -312,20 +312,16 @@
             </table>
           </div>
 
-          <h3 class="table-heading second-table">
-            Directly measured runtime at 224 px
-          </h3>
+          <h3 class="table-heading second-table">Measured runtime</h3>
           <p class="table-description">
-            Only methods profiled end to end in the reported L40S setup are
-            included.
+            End-to-end latency at 224 px on one NVIDIA L40S. T3R also achieves
+            a 3.3× LLM-forward speedup at 768 px.
           </p>
           <div class="table-scroll">
             <table>
               <thead>
                 <tr>
                   <th>Method</th>
-                  <th>Scene-token reduction</th>
-                  <th>Success</th>
                   <th>Runtime</th>
                   <th>Speedup</th>
                 </tr>
@@ -333,34 +329,22 @@
               <tbody>
                 <tr>
                   <td>Baseline</td>
-                  <td>0%</td>
-                  <td>97%</td>
                   <td>107.5 ms</td>
                   <td>1.00×</td>
                 </tr>
                 <tr>
                   <td>TeamVLA</td>
-                  <td>~15%</td>
-                  <td>94%</td>
                   <td>102.6 ms</td>
                   <td>1.05×</td>
                 </tr>
                 <tr class="ours">
                   <td>T3R (ours)</td>
-                  <td><strong>85%</strong></td>
-                  <td><strong>96%</strong></td>
                   <td><strong>92.5 ms</strong></td>
                   <td><strong>1.16×</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="table-note">
-            FastV and ADP are omitted from the runtime table because the paper
-            does not report directly measured 224 px end-to-end timings for
-            them. ADP's 384, 512, and 768 px latency values are projections.
-            T3R also achieves a measured 3.3× LLM-forward speedup at 768 px.
-          </p>
 
           <figure class="paper-figure result-figure">
             <img
