@@ -22,3 +22,8 @@ python -m http.server 8000
 ```
 
 Then open <http://localhost:8000>.
+
+## Fonts
+
+The site self-hosts Acme and Noto Sans. Their SIL Open Font License files
+are included in `assets/fonts/`.

@@ -10,13 +10,6 @@ document.querySelectorAll("[data-paper-link]").forEach((link) => {
   link.querySelector("[data-paper-label]").textContent = "Paper";
 });
 
-document.querySelectorAll("[data-compare]").forEach((comparison) => {
-  const slider = comparison.querySelector('input[type="range"]');
-  slider?.addEventListener("input", () => {
-    comparison.style.setProperty("--position", `${slider.value}%`);
-  });
-});
-
 const videoObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
