@@ -1,0 +1,15 @@
+click_bell,siglip_k50,"{"method":"t3r","sel":"siglip","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 6/12 => 50.0%, current seed: 100011,tok=[128, 128, 128]
+click_bell,siglipsam_k75,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.75,0.75,0.75","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[192, 192, 192]
+click_bell,rand_k75,"{"method":"t3r","sel":"random","cam_keep":"0.75,0.75,0.75","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[192, 192, 192]
+click_bell,siglip_k375,"{"method":"t3r","sel":"siglip","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+click_bell,siglipsam_k50,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 7/12 => 58.3%, current seed: 100011,tok=[128, 128, 128]
+click_bell,rand_k50,"{"method":"t3r","sel":"random","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[128, 128, 128]
+click_bell,siglip_k75,"{"method":"t3r","sel":"siglip","cam_keep":"0.75,0.75,0.75","fixnoise":1}",Success rate: 7/12 => 58.3%, current seed: 100011,tok=[192, 192, 192]
+click_bell,siglipsam_k375,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[96, 96, 96]
+click_bell,rand_k375,"{"method":"t3r","sel":"random","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,siglip_k50,"{"method":"t3r","sel":"siglip","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[128, 128, 128]
+click_alarmclock,siglipsam_k75,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.75,0.75,0.75","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[192, 192, 192]
+click_alarmclock,siglip_k375,"{"method":"t3r","sel":"siglip","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,siglipsam_k50,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[128, 128, 128]
+click_alarmclock,siglip_k75,"{"method":"t3r","sel":"siglip","cam_keep":"0.75,0.75,0.75","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[192, 192, 192]
+click_alarmclock,siglipsam_k375,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]

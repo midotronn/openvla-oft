@@ -1,0 +1,48 @@
+# Timing run: Full Pipeline (SigLIP-SAM pruning + IG attention biasing)
+# Run just 2 tasks x 10 episodes for timing breakdown
+
+model_path: "moojink/openvla-7b-oft-finetuned-libero-spatial"
+model_family: "openvla"
+pretrained_checkpoint: null
+
+task_suite_name: "libero_spatial"
+task_id: 0-1
+num_episodes: 10
+center_crop: true
+
+# SAM pruning
+use_sam: true
+sam_backend: "efficienttam"
+sam_checkpoint: "EfficientTAM/checkpoints"
+sam_model_type: "efficienttam_s"
+efficienttam_base_dir: "EfficientTAM"
+top_k_points: 8
+num_neg_points: 3
+mask_to_patch_threshold: 0.3
+target_extraction: "simple"
+use_weighted_similarity: true
+use_spatial_clustering: true
+k_initial: 50
+dbscan_eps: 2.0
+min_cluster_size: 3
+
+# IG attention biasing
+use_attention_bias: true
+bias_strength: 2.0
+bias_active_layers: "8-23"
+saliency_top_k_ratio: 0.3
+ig_steps: 3
+
+# No OOD perturbation
+ood_enabled: false
+
+# Action head
+use_diffusion: false
+use_proprio: true
+use_film: false
+
+# Logging
+save_visualizations: false
+output_dir: "./eval_results/timing_full"
+rollout_dir: "./rollouts/timing_full"
+seed: 7

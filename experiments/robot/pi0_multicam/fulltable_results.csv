@@ -1,0 +1,22 @@
+click_bell,siglip_k25,"{"method":"t3r","sel":"siglip","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+click_bell,siglipsam_k25,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+click_bell,adp_k25,"{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+click_bell,fastv_k25,"{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[64, 64, 64]
+click_bell,team_k25,"{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[64, 64, 64]
+click_bell,adp_k375,"{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[96, 96, 96]
+click_bell,fastv_k375,"{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[96, 96, 96]
+click_bell,team_k375,"{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+click_bell,adp_k625,"{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[160, 160, 160]
+click_bell,fastv_k625,"{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[160, 160, 160]
+click_bell,team_k625,"{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,siglip_k25,"{"method":"t3r","sel":"siglip","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,siglipsam_k25,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,adp_k25,"{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,fastv_k25,"{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,team_k25,"{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,adp_k375,"{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,fastv_k375,"{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,team_k375,"{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,adp_k625,"{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,fastv_k625,"{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,team_k625,"{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[160, 160, 160]

@@ -1,0 +1,4 @@
+click_bell,siglip625,"{"method":"t3r","sel":"siglip","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 7/12 => 58.3%, current seed: 100011,tok=[160, 160, 160]
+click_bell,siglipsam625,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.625,0.625,0.625","fixnoise":1}",,tok=[160, 160, 160]
+click_alarmclock,siglip625,"{"method":"t3r","sel":"siglip","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,siglipsam625,"{"method":"t3r","sel":"siglipsam","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[160, 160, 160]

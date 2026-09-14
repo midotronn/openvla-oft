@@ -1,0 +1,2 @@
+click_bell,rand625,"{"method":"t3r","sel":"random","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,rand625,"{"method":"t3r","sel":"random","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[160, 160, 160]

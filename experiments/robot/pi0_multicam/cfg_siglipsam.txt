@@ -1,0 +1,2 @@
+siglip625|{"method":"t3r","sel":"siglip","cam_keep":"0.625,0.625,0.625","fixnoise":1}
+siglipsam625|{"method":"t3r","sel":"siglipsam","cam_keep":"0.625,0.625,0.625","fixnoise":1}

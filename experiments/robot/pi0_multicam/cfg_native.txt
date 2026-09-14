@@ -1,0 +1,5 @@
+base|{"method":"none"}
+t3r_native|{"method":"t3r","sel":"norm","thresh":1.0}
+fastv_native|{"method":"fastv","cam_keep":"0.5,0.5,0.5"}
+adp_native|{"method":"adp","cam_keep":"0.75,0.75,0.75","adp_gate":1}
+team_native|{"method":"team","team_native":1,"team_topk":80,"team_k":3,"team_u":0.25,"team_tau":1}

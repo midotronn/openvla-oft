@@ -1,0 +1,5 @@
+base|{"method":"none"}
+t3r|{"method":"t3r","sel":"norm","cam_keep":"0.75,0.75,0.75"}
+adp|{"method":"adp","cam_keep":"0.75,0.75,0.75"}
+fastv|{"method":"fastv","cam_keep":"0.75,0.75,0.75"}
+team|{"method":"team","cam_keep":"0.75,0.75,0.75"}

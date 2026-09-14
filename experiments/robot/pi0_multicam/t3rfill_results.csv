@@ -1,0 +1,6 @@
+click_bell,t3r_k25,"{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25"}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[64, 64, 64]
+click_bell,t3r_k375,"{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375"}",Success rate: 7/12 => 58.3%, current seed: 100011,tok=[96, 96, 96]
+click_bell,t3r_k625,"{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625"}",Success rate: 9/12 => 75.0%, current seed: 100011,tok=[160, 160, 160]
+click_alarmclock,t3r_k25,"{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25"}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+click_alarmclock,t3r_k375,"{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375"}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[96, 96, 96]
+click_alarmclock,t3r_k625,"{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625"}",Success rate: 7/12 => 58.3%, current seed: 100011,tok=[160, 160, 160]

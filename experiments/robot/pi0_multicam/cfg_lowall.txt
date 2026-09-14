@@ -1,0 +1,12 @@
+norm_k50|{"method":"t3r","sel":"norm","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+adp_k50|{"method":"adp","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+fastv_k50|{"method":"fastv","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+team_k50|{"method":"team","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+norm_k375|{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+adp_k375|{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+fastv_k375|{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+team_k375|{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+norm_k25|{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+adp_k25|{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+fastv_k25|{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+team_k25|{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}

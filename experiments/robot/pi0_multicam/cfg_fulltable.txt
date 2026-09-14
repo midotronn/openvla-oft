@@ -1,0 +1,11 @@
+siglip_k25|{"method":"t3r","sel":"siglip","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+siglipsam_k25|{"method":"t3r","sel":"siglipsam","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+adp_k25|{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+fastv_k25|{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+team_k25|{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}
+adp_k375|{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+fastv_k375|{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+team_k375|{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+adp_k625|{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}
+fastv_k625|{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}
+team_k625|{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}

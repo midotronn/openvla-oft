@@ -1,0 +1,4 @@
+press_stapler,t3r_lang,"{"method":"t3r","sel":"lang","cam_keep":"0.75,0.75,0.75"}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[192, 192, 192]
+press_stapler,t3r_rand,"{"method":"t3r","sel":"random","cam_keep":"0.75,0.75,0.75"}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[192, 192, 192]
+press_stapler,t3r_norm,"{"method":"t3r","sel":"norm","cam_keep":"0.75,0.75,0.75"}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[192, 192, 192]
+press_stapler,adp,"{"method":"adp","cam_keep":"0.75,0.75,0.75"}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[192, 192, 192]

@@ -1,0 +1,59 @@
+beat_block_hammer,base,"{"method":"none","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[256, 256, 256]
+adjust_bottle,base,"{"method":"none","fixnoise":1}",,tok=[96, 96, 96]
+grab_roller,base,"{"method":"none","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[256, 256, 256]
+handover_mic,base,"{"method":"none","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[256, 256, 256]
+move_can_pot,base,"{"method":"none","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[256, 256, 256]
+place_empty_cup,base,"{"method":"none","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[256, 256, 256]
+place_object_stand,base,"{"method":"none","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[256, 256, 256]
+stack_blocks_two,base,"{"method":"none","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[256, 256, 256]
+stamp_seal,base,"{"method":"none","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[256, 256, 256]
+turn_switch,base,"{"method":"none","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[256, 256, 256]
+place_empty_cup,norm_k375,"{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[96, 96, 96]
+place_empty_cup,norm_k50,"{"method":"t3r","sel":"norm","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 5/12 => 41.7%, current seed: 100011,tok=[128, 128, 128]
+place_empty_cup,norm_k625,"{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 6/12 => 50.0%, current seed: 100011,tok=[160, 160, 160]
+place_empty_cup,adp_k375,"{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[96, 96, 96]
+place_empty_cup,adp_k50,"{"method":"adp","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[128, 128, 128]
+place_empty_cup,adp_k625,"{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[160, 160, 160]
+place_empty_cup,fastv_k625,"{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 6/12 => 50.0%, current seed: 100011,tok=[160, 160, 160]
+place_empty_cup,team_k625,"{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[160, 160, 160]
+grab_roller,norm_k625,"{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[160, 160, 160]
+grab_roller,adp_k625,"{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[160, 160, 160]
+grab_roller,fastv_k625,"{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[160, 160, 160]
+grab_roller,team_k625,"{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[160, 160, 160]
+press_stapler,base,"{"method":"none","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[256, 256, 256]
+place_object_stand,norm_k625,"{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[160, 160, 160]
+place_object_stand,adp_k625,"{"method":"adp","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[160, 160, 160]
+place_object_stand,fastv_k625,"{"method":"fastv","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[160, 160, 160]
+place_object_stand,team_k625,"{"method":"team","cam_keep":"0.625,0.625,0.625","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[160, 160, 160]
+place_empty_cup,fastv_k50,"{"method":"fastv","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[128, 128, 128]
+place_empty_cup,team_k50,"{"method":"team","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[128, 128, 128]
+place_empty_cup,fastv_k375,"{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[96, 96, 96]
+place_empty_cup,team_k375,"{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+grab_roller,norm_k50,"{"method":"t3r","sel":"norm","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[128, 128, 128]
+grab_roller,adp_k50,"{"method":"adp","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[128, 128, 128]
+grab_roller,fastv_k50,"{"method":"fastv","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[128, 128, 128]
+grab_roller,team_k50,"{"method":"team","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[128, 128, 128]
+grab_roller,norm_k375,"{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+grab_roller,adp_k375,"{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+grab_roller,fastv_k375,"{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 4/12 => 33.3%, current seed: 100011,tok=[96, 96, 96]
+grab_roller,team_k375,"{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[96, 96, 96]
+place_object_stand,norm_k50,"{"method":"t3r","sel":"norm","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[128, 128, 128]
+place_object_stand,adp_k50,"{"method":"adp","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[128, 128, 128]
+place_object_stand,fastv_k50,"{"method":"fastv","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[128, 128, 128]
+place_object_stand,team_k50,"{"method":"team","cam_keep":"0.5,0.5,0.5","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[128, 128, 128]
+place_object_stand,norm_k375,"{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+place_object_stand,adp_k375,"{"method":"adp","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[96, 96, 96]
+place_object_stand,fastv_k375,"{"method":"fastv","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 1/12 => 8.3%, current seed: 100011,tok=[96, 96, 96]
+place_object_stand,team_k375,"{"method":"team","cam_keep":"0.375,0.375,0.375","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[96, 96, 96]
+place_object_stand,norm_k25,"{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+place_object_stand,adp_k25,"{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+place_object_stand,fastv_k25,"{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+place_object_stand,team_k25,"{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+grab_roller,norm_k25,"{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+grab_roller,adp_k25,"{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+grab_roller,fastv_k25,"{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+grab_roller,team_k25,"{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]
+place_empty_cup,norm_k25,"{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+place_empty_cup,adp_k25,"{"method":"adp","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 3/12 => 25.0%, current seed: 100011,tok=[64, 64, 64]
+place_empty_cup,fastv_k25,"{"method":"fastv","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 2/12 => 16.7%, current seed: 100011,tok=[64, 64, 64]
+place_empty_cup,team_k25,"{"method":"team","cam_keep":"0.25,0.25,0.25","fixnoise":1}",Success rate: 0/12 => 0.0%, current seed: 100011,tok=[64, 64, 64]

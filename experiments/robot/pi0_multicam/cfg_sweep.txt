@@ -1,0 +1,6 @@
+siglip_k50|{"method":"t3r","sel":"siglip","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+siglipsam_k75|{"method":"t3r","sel":"siglipsam","cam_keep":"0.75,0.75,0.75","fixnoise":1}
+siglip_k375|{"method":"t3r","sel":"siglip","cam_keep":"0.375,0.375,0.375","fixnoise":1}
+siglipsam_k50|{"method":"t3r","sel":"siglipsam","cam_keep":"0.5,0.5,0.5","fixnoise":1}
+siglip_k75|{"method":"t3r","sel":"siglip","cam_keep":"0.75,0.75,0.75","fixnoise":1}
+siglipsam_k375|{"method":"t3r","sel":"siglipsam","cam_keep":"0.375,0.375,0.375","fixnoise":1}

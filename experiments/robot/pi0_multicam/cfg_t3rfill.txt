@@ -1,0 +1,3 @@
+t3r_k25|{"method":"t3r","sel":"norm","cam_keep":"0.25,0.25,0.25"}
+t3r_k375|{"method":"t3r","sel":"norm","cam_keep":"0.375,0.375,0.375"}
+t3r_k625|{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625"}

@@ -1,0 +1,2 @@
+t3r_faithful625|{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625","bias":1,"bias_strength":2.0,"bias_nsteps":8,"bias_topratio":0.25,"fixnoise":1}
+t3r_prune625|{"method":"t3r","sel":"norm","cam_keep":"0.625,0.625,0.625","fixnoise":1}
