@@ -7,7 +7,7 @@
       name="description"
       content="T3R is a training-free two-stage token refinement framework for efficient and robust Vision-Language-Action inference."
     />
-    <meta name="theme-color" content="#f4f0e7" />
+    <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
@@ -15,15 +15,15 @@
     />
     <meta
       property="og:description"
-      content="Prune irrelevant visual tokens, refocus attention, and improve VLA efficiency without retraining."
+      content="Prune irrelevant visual tokens and refocus action attention without retraining."
     />
     <meta
       property="og:url"
-      content="https://midotronn.github.io/t3r/"
+      content="https://midotronn.github.io/openvla-oft/"
     />
     <meta
       property="og:image"
-      content="https://midotronn.github.io/t3r/assets/images/og-card.png"
+      content="https://midotronn.github.io/openvla-oft/assets/images/og-card.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -36,26 +36,20 @@
     />
     <meta
       name="twitter:image"
-      content="https://midotronn.github.io/t3r/assets/images/og-card.png"
+      content="https://midotronn.github.io/openvla-oft/assets/images/og-card.png"
     />
-    <link rel="canonical" href="https://midotronn.github.io/t3r/" />
+    <link
+      rel="canonical"
+      href="https://midotronn.github.io/openvla-oft/"
+    />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <link
       rel="preload"
       as="image"
-      href="assets/images/hero-original.webp"
+      href="assets/images/pipeline.webp"
       fetchpriority="high"
     />
-    <link
-      rel="preload"
-      as="image"
-      href="assets/images/hero-pruned.webp"
-      fetchpriority="high"
-    />
-    <script>
-      document.documentElement.classList.add("js");
-    </script>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
     <title>T3R — Training-Free Two-Stage Token Refinement</title>
@@ -64,6 +58,8 @@
         "@context": "https://schema.org",
         "@type": "ScholarlyArticle",
         "name": "T3R: Training-Free Two-Stage Token Refinement Towards Efficient and Robust VLA Models",
+        "url": "https://midotronn.github.io/openvla-oft/",
+        "codeRepository": "https://github.com/midotronn/openvla-oft",
         "author": [
           { "@type": "Person", "name": "Mohammed Hassan" },
           { "@type": "Person", "name": "Zhenyang Chen" },
@@ -83,100 +79,204 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="grain" aria-hidden="true"></div>
 
-    <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="T3R home">
-        T<span>3</span>R
-      </a>
-      <nav aria-label="Primary navigation">
+    <header class="paper-header" id="top">
+      <p class="venue">ASP-DAC 2027</p>
+      <div class="paper-mark" role="img" aria-label="T3R">
+        <span>T</span><sup>3</sup><span>R</span>
+      </div>
+      <h1>
+        Training-Free Two-Stage Token Refinement Towards Efficient and Robust
+        VLA Models
+      </h1>
+
+      <p class="authors">
+        Mohammed Hassan<sup>1</sup>, Zhenyang Chen<sup>2</sup>,
+        Zheng Wang<sup>3</sup>, Zhixin Zhu<sup>4</sup>,
+        Tianlong Chen<sup>5</sup>, Yingyan Lin<sup>2</sup>,
+        Chaojian Li<sup>6</sup>
+      </p>
+      <p class="affiliations">
+        <span><sup>1</sup>The University of Texas at Austin</span>
+        <span><sup>2</sup>Georgia Institute of Technology</span>
+        <span><sup>3</sup>University of Illinois Urbana-Champaign</span>
+        <span><sup>4</sup>Sun Yat-Sen University</span>
+        <span><sup>5</sup>University of North Carolina at Chapel Hill</span>
+        <span><sup>6</sup>Hong Kong University of Science and Technology</span>
+      </p>
+
+      <div class="paper-links" role="group" aria-label="Paper resources">
+        <a class="pill-button is-pending" data-paper-link href="#citation">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M6 2.75h8.7L19 7.05V21.25H6z"></path>
+            <path d="M14.5 2.75v4.6H19M9 12h7M9 15.5h7"></path>
+          </svg>
+          <span data-paper-label>Paper coming soon</span>
+        </a>
+        <a
+          class="pill-button"
+          href="https://github.com/midotronn/openvla-oft"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.48.09.66-.2.66-.46v-1.68c-2.68.58-3.25-1.14-3.25-1.14-.44-1.12-1.07-1.42-1.07-1.42-.88-.6.07-.59.07-.59.97.07 1.48 1 1.48 1 .86 1.48 2.27 1.05 2.82.8.09-.63.34-1.05.61-1.3-2.14-.24-4.39-1.07-4.39-4.7 0-1.04.37-1.9 1-2.56-.1-.24-.43-1.22.09-2.53 0 0 .81-.26 2.61.98A9 9 0 0 1 12 7.1a9 9 0 0 1 2.38.32c1.81-1.24 2.61-.98 2.61-.98.52 1.31.19 2.29.09 2.53.62.67 1 1.52 1 2.56 0 3.64-2.26 4.45-4.41 4.69.35.3.66.89.66 1.8v2.54c0 .26.17.55.67.46A9.5 9.5 0 0 0 12 2.5Z"
+            ></path>
+          </svg>
+          Code
+        </a>
+      </div>
+
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#abstract">Abstract</a>
         <a href="#method">Method</a>
         <a href="#results">Results</a>
-        <a href="#media">Visuals</a>
-        <a href="#citation">Citation</a>
+        <a href="#videos">Videos</a>
+        <a href="#citation">BibTeX</a>
       </nav>
-      <a
-        class="header-code"
-        href="https://github.com/midotronn/t3r"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Code
-        <span aria-hidden="true">↗</span>
-      </a>
     </header>
 
     <main id="main">
-      <section class="hero section-shell" id="top">
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span> ASP-DAC 2027</p>
-          <h1>See less.<br /><em>Act better.</em></h1>
-          <p class="hero-summary">
-            T3R removes irrelevant visual tokens before decoding, then redirects
-            attention toward instruction-critical evidence—without retraining.
-          </p>
+      <section class="teaser page-width" aria-labelledby="teaser-caption">
+        <figure class="hero-figure">
+          <img
+            src="assets/images/pipeline.webp"
+            alt="T3R pipeline: segmentation-guided token pruning followed by saliency-guided attention biasing"
+            width="1640"
+            height="953"
+            fetchpriority="high"
+          />
+          <figcaption id="teaser-caption">
+            <strong>T3R refines VLA inputs in two stages.</strong>
+            Segmentation-guided pruning removes irrelevant visual patches before
+            decoder entry; saliency-guided biasing then redirects action
+            attention toward the instruction-critical evidence that remains.
+          </figcaption>
+        </figure>
+      </section>
 
-          <div class="hero-actions">
-            <a
-              class="button button-primary is-pending"
-              data-paper-link
-              href="#citation"
-            >
-              <svg aria-hidden="true" viewBox="0 0 24 24">
-                <path d="M6 2.75h8.7L19 7.05V21.25H6z"></path>
-                <path d="M14.5 2.75v4.6H19M9 12h7M9 15.5h7"></path>
-              </svg>
-              <span data-paper-label>Paper coming soon</span>
-            </a>
-            <a
-              class="button button-secondary"
-              href="https://github.com/midotronn/t3r"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <svg aria-hidden="true" viewBox="0 0 24 24">
-                <path
-                  d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.48.09.66-.2.66-.46v-1.68c-2.68.58-3.25-1.14-3.25-1.14-.44-1.12-1.07-1.42-1.07-1.42-.88-.6.07-.59.07-.59.97.07 1.48 1 1.48 1 .86 1.48 2.27 1.05 2.82.8.09-.63.34-1.05.61-1.3-2.14-.24-4.39-1.07-4.39-4.7 0-1.04.37-1.9 1-2.56-.1-.24-.43-1.22.09-2.53 0 0 .81-.26 2.61.98A9 9 0 0 1 12 7.1a9 9 0 0 1 2.38.32c1.81-1.24 2.61-.98 2.61-.98.52 1.31.19 2.29.09 2.53.62.67 1 1.52 1 2.56 0 3.64-2.26 4.45-4.41 4.69.35.3.66.89.66 1.8v2.54c0 .26.17.55.67.46A9.5 9.5 0 0 0 12 2.5Z"
-                ></path>
-              </svg>
-              View code
-            </a>
-          </div>
+      <section class="content-section narrow" id="abstract">
+        <h2>Abstract</h2>
+        <p class="lead">
+          Vision-Language-Action models process hundreds of visual tokens at
+          every decision step, increasing latency while allowing irrelevant
+          context to distract action prediction under distribution shift. T3R
+          addresses two complementary forms of redundancy: spatially irrelevant
+          visual tokens and misallocated attention over the retained sequence.
+        </p>
+        <p>
+          T3R is fully training-free. Its first stage uses instruction-conditioned
+          segmentation to prune visual patches before the decoder. Its second
+          stage uses Integrated Gradients to identify instruction-salient tokens
+          and applies an additive attention bias in the middle decoder layers.
+          Across OpenVLA-OFT, CogACT, and π0.5, T3R improves the
+          accuracy-efficiency frontier while preserving the underlying model
+          weights.
+        </p>
+      </section>
 
-          <p class="authors">
-            Mohammed Hassan · Zhenyang Chen · Zheng Wang · Zhixin Zhu · Tianlong
-            Chen · Yingyan Lin · Chaojian Li
-          </p>
-          <p class="affiliations">
-            UT Austin · Georgia Tech · UIUC · Sun Yat-Sen University · UNC
-            Chapel Hill · HKUST
+      <section class="headline-results page-width" aria-label="Headline results">
+        <article>
+          <strong>85%</strong>
+          <span>scene-camera tokens pruned before decoding</span>
+        </article>
+        <article>
+          <strong>96%</strong>
+          <span>LIBERO-Spatial success, versus 97% unpruned</span>
+        </article>
+        <article>
+          <strong>+7 pp</strong>
+          <span>OOD success gain at the largest placement shift</span>
+        </article>
+        <article>
+          <strong>3.3×</strong>
+          <span>measured LLM forward speedup at 768 px</span>
+        </article>
+      </section>
+
+      <section class="content-section page-width" id="method">
+        <div class="section-heading">
+          <p class="section-kicker">Method</p>
+          <h2>Remove distraction, then repair attention.</h2>
+          <p>
+            The stages target different bottlenecks and require no additional
+            training or model-weight updates.
           </p>
         </div>
 
-        <div class="hero-demo reveal" data-delay="1">
-          <div class="compare-card">
-            <div class="compare-labels">
-              <span>Task-relevant tokens</span>
-              <span>Full observation</span>
-            </div>
+        <div class="stage-grid">
+          <article class="stage-card stage-one">
+            <span class="stage-index">Stage 1</span>
+            <h3>Segmentation-guided pruning</h3>
+            <p>
+              POS-weighted SigLIP similarity localizes instruction-relevant
+              regions. Spatially clustered point prompts and DINOv2 features
+              guide EfficientTAM, and only patches intersecting the resulting
+              mask enter the language-model decoder.
+            </p>
+            <ul>
+              <li>Operates before every decoder layer</li>
+              <li>Adapts the retained budget to scene difficulty</li>
+              <li>Removes irrelevant context as well as compute</li>
+            </ul>
+          </article>
+
+          <article class="stage-card stage-two">
+            <span class="stage-index">Stage 2</span>
+            <h3>Saliency-guided attention biasing</h3>
+            <p>
+              Integrated Gradients identifies instruction tokens that are
+              salient to the predicted action. A lightweight additive bias
+              guides action-token queries toward those tokens in decoder layers
+              8–23.
+            </p>
+            <ul>
+              <li>Uses five effective IG steps</li>
+              <li>Targets the model's middle decoder layers</li>
+              <li>Recovers six points over pruning alone</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="method-detail-grid">
+          <figure class="academic-figure">
+            <img
+              src="assets/images/selection.webp"
+              alt="Naive similarity points compared with spatially clustered prompts and their segmentation masks"
+              width="1700"
+              height="1136"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <strong>Spatial agreement improves selection.</strong>
+              Clustering suppresses isolated background matches before
+              segmentation.
+            </figcaption>
+          </figure>
+
+          <figure class="academic-figure">
             <div class="image-compare" data-compare style="--position: 58%">
               <img
                 src="assets/images/hero-original.webp"
-                alt="Original simulated robot observation with several objects on a table"
+                alt="Original robot observation"
                 width="512"
                 height="512"
-                fetchpriority="high"
+                loading="lazy"
+                decoding="async"
               />
               <div class="compare-after">
                 <img
                   src="assets/images/hero-pruned.webp"
-                  alt="The same observation with irrelevant regions suppressed"
+                  alt="Observation with irrelevant regions suppressed"
                   width="512"
                   height="512"
-                  fetchpriority="high"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
-              <div class="compare-divider" aria-hidden="true">
+              <div class="compare-line" aria-hidden="true">
                 <span>↔</span>
               </div>
               <input
@@ -184,186 +284,39 @@
                 min="0"
                 max="100"
                 value="58"
-                aria-label="Reveal pruned token view"
+                aria-label="Reveal the retained token view"
               />
             </div>
-            <div class="compare-footer">
-              <span><strong>85%</strong> fewer scene tokens</span>
-              <span class="live-dot">interactive</span>
-            </div>
-          </div>
+            <figcaption>
+              <strong>Interactive retained-token view.</strong>
+              Drag to compare the full observation with the evidence retained
+              for the decoder.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <section class="metric-strip" aria-label="Headline results">
-        <article class="metric reveal">
-          <strong data-count="85" data-suffix="%">85%</strong>
-          <span>scene-camera tokens pruned</span>
-        </article>
-        <article class="metric reveal" data-delay="1">
-          <strong data-count="96" data-suffix="%">96%</strong>
-          <span>LIBERO-Spatial success</span>
-        </article>
-        <article class="metric reveal" data-delay="2">
-          <strong data-count="1.16" data-decimals="2" data-suffix="×"
-            >1.16×</strong
-          >
-          <span>measured end-to-end speedup</span>
-        </article>
-        <article class="metric reveal" data-delay="3">
-          <strong data-count="7" data-prefix="+" data-suffix=" pp"
-            >+7 pp</strong
-          >
-          <span>OOD gain at 4 cm shift</span>
-        </article>
-      </section>
-
-      <section class="story section-shell" id="method">
-        <div class="section-intro reveal">
-          <p class="eyebrow"><span></span> The idea</p>
-          <h2>Two kinds of redundancy.<br />Two stages of refinement.</h2>
+      <section class="content-section page-width" id="results">
+        <div class="section-heading">
+          <p class="section-kicker">Results</p>
+          <h2>High token reduction without the usual accuracy collapse.</h2>
           <p>
-            Many visual patches are irrelevant to the instruction, while
-            attention over the remaining sequence is often diffuse. T3R
-            addresses both problems at inference time.
+            At the same 85% reduction on LIBERO-Spatial, T3R exceeds ADP by 30
+            percentage points and FastV by 82 points.
           </p>
         </div>
 
-        <div class="stage-grid">
-          <article class="stage-card stage-prune reveal">
-            <div class="stage-number">01</div>
-            <div>
-              <p class="stage-kicker">Before the decoder</p>
-              <h3>Prune the visual sequence.</h3>
-              <p>
-                POS-weighted SigLIP similarity identifies likely task targets.
-                EfficientTAM turns those prompts into a mask, and only the
-                selected patches enter the language model.
-              </p>
-            </div>
-            <div class="token-field" data-token-field aria-hidden="true"></div>
-          </article>
-
-          <article class="stage-card stage-bias reveal" data-delay="1">
-            <div class="stage-number">02</div>
-            <div>
-              <p class="stage-kicker">Inside the decoder</p>
-              <h3>Refocus action attention.</h3>
-              <p>
-                Integrated Gradients finds instruction-salient tokens. A
-                lightweight additive bias guides action-token queries in the
-                middle decoder layers.
-              </p>
-            </div>
-            <div class="attention-words" aria-hidden="true">
-              <span>pick</span><span>the</span><span class="hot">bowl</span>
-              <span>next</span><span>to</span><span>the</span>
-              <span class="hot">plate</span>
-            </div>
-          </article>
-        </div>
-
-        <figure class="figure-card wide reveal">
-          <img
-            src="assets/images/pipeline.webp"
-            alt="T3R pipeline showing segmentation-guided pruning followed by saliency-guided attention biasing"
-            width="1640"
-            height="953"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            T3R shortens the sequence before all decoder layers, then repairs
-            attention allocation over the retained evidence.
-          </figcaption>
-        </figure>
-      </section>
-
-      <section class="media-band" id="media">
-        <div class="section-shell">
-          <div class="section-intro light reveal">
-            <p class="eyebrow"><span></span> Visual walkthroughs</p>
-            <h2>The method, frame by frame.</h2>
-            <p>
-              Short animated explainers assembled from the paper figures. They
-              illustrate the processing pipeline and measured trends rather than
-              depicting real-time robot rollouts.
-            </p>
+        <div class="table-card">
+          <div class="table-title">
+            <strong>OpenVLA-OFT on LIBERO-Spatial</strong>
+            <span>Success rate (%) and runtime per control step</span>
           </div>
-
-          <div class="video-grid">
-            <figure class="video-card reveal">
-              <video
-                muted
-                loop
-                playsinline
-                controls
-                preload="metadata"
-                poster="assets/images/pruning-qualitative.webp"
-                aria-label="Animated walkthrough of T3R visual token pruning"
-              >
-                <source
-                  src="assets/videos/pruning-walkthrough.mp4"
-                  type="video/mp4"
-                />
-              </video>
-              <figcaption>
-                <span>01</span>
-                <div>
-                  <strong>From observation to retained tokens</strong>
-                  <p>Similarity → segmentation → pre-decoder pruning.</p>
-                </div>
-              </figcaption>
-            </figure>
-
-            <figure class="video-card reveal" data-delay="1">
-              <video
-                muted
-                loop
-                playsinline
-                controls
-                preload="metadata"
-                poster="assets/images/pipeline.webp"
-                aria-label="Animated overview of T3R method and results"
-              >
-                <source
-                  src="assets/videos/results-overview.mp4"
-                  type="video/mp4"
-                />
-              </video>
-              <figcaption>
-                <span>02</span>
-                <div>
-                  <strong>Why refinement helps</strong>
-                  <p>Attention concentration, latency, and OOD robustness.</p>
-                </div>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      <section class="results section-shell" id="results">
-        <div class="section-intro reveal">
-          <p class="eyebrow"><span></span> Main results</p>
-          <h2>A smaller sequence.<br />Nearly the same success.</h2>
-          <p>
-            On LIBERO-Spatial, T3R removes 85% of scene-camera tokens before
-            decoding while retaining 96% success—one point below the unpruned
-            model and far above competing methods at the same reduction.
-          </p>
-        </div>
-
-        <div class="result-layout">
-          <div class="result-table-wrap reveal">
+          <div class="table-scroll">
             <table>
-              <caption>
-                OpenVLA-OFT · LIBERO-Spatial
-              </caption>
               <thead>
                 <tr>
                   <th>Method</th>
-                  <th>Reduction</th>
+                  <th>Scene-token reduction</th>
                   <th>Success</th>
                   <th>Runtime</th>
                 </tr>
@@ -393,140 +346,89 @@
                   <td>66%</td>
                   <td>—</td>
                 </tr>
-                <tr class="highlight-row">
-                  <td>T3R</td>
+                <tr class="ours">
+                  <td>T3R (ours)</td>
                   <td>85%</td>
                   <td>96%</td>
                   <td>92.5 ms</td>
                 </tr>
               </tbody>
             </table>
-            <p class="table-note">
-              Runtime is measured per control step on one NVIDIA L40S at 224 px.
-            </p>
           </div>
-
-          <div class="result-callout reveal" data-delay="1">
-            <p class="callout-label">At matched 85% reduction</p>
-            <strong>+30 pp</strong>
-            <p>over ADP and <strong>+82 pp</strong> over FastV.</p>
-            <div class="mini-bars" aria-hidden="true">
-              <span style="--value: 14%"><i>FastV</i></span>
-              <span style="--value: 66%"><i>ADP</i></span>
-              <span class="active" style="--value: 96%"><i>T3R</i></span>
-            </div>
-          </div>
+          <p class="table-note">
+            Runtime is measured on one NVIDIA L40S at 224 px. Including the
+            fixed 7.8 ms refinement overhead, the end-to-end speedup is 1.16×
+            at this resolution and is projected to reach 2.47× at 768 px.
+          </p>
         </div>
 
         <div class="figure-grid">
-          <figure class="figure-card reveal">
+          <figure class="academic-figure">
             <img
               src="assets/images/attention.webp"
-              alt="Attention distribution and heatmap showing most visual tokens receive negligible action-query attention"
+              alt="Attention statistics and spatial heatmaps showing that most visual tokens receive negligible action-query attention"
               width="1800"
               height="768"
               loading="lazy"
               decoding="async"
             />
             <figcaption>
-              <strong>Most tokens are near-inert.</strong> 93.9% receive less
-              than 0.2% of action-query attention each.
+              <strong>Most visual tokens are near-inert.</strong>
+              Across all 32 decoder layers, 93.9% receive less than 0.2% of
+              action-query attention each.
             </figcaption>
           </figure>
 
-          <figure class="figure-card reveal" data-delay="1">
+          <figure class="academic-figure">
             <img
               src="assets/images/latency.webp"
-              alt="Measured VLA inference latency as the number of retained visual tokens decreases"
+              alt="Measured VLA inference latency at different retained visual-token counts"
               width="1500"
               height="738"
               loading="lazy"
               decoding="async"
             />
             <figcaption>
-              <strong>Token count predicts decoder cost.</strong> Measured
-              latency falls approximately linearly at the tested sequence
-              lengths.
+              <strong>Shorter sequences reduce decoder cost.</strong>
+              At the tested lengths, latency follows an approximately linear
+              0.040 ms/token + 53.3 ms trend.
             </figcaption>
           </figure>
         </div>
 
-        <figure class="figure-card wide ood-card reveal">
-          <div class="figure-copy">
-            <p class="eyebrow"><span></span> Robustness</p>
-            <h3>Removing distractors helps under shift.</h3>
-            <p>
-              T3R tracks the unpruned model under small perturbations, then
-              pulls ahead beyond roughly 2 cm—reaching a seven-point advantage
-              at 4 cm.
-            </p>
-          </div>
+        <figure class="academic-figure wide-figure">
           <img
             src="assets/images/ood.webp"
-            alt="OOD robustness sweep comparing baseline, T3R full pipeline, and TeamVLA"
+            alt="OOD robustness under increasing object-placement perturbation for the baseline, T3R, and TeamVLA"
             width="1800"
             height="990"
             loading="lazy"
             decoding="async"
           />
+          <figcaption>
+            <strong>Robustness under object-placement shift.</strong>
+            T3R tracks the unpruned model for small perturbations, then pulls
+            ahead beyond roughly 2 cm and leads by up to seven points.
+          </figcaption>
         </figure>
       </section>
 
-      <section class="generalization">
-        <div class="section-shell">
-          <div class="section-intro reveal">
-            <p class="eyebrow"><span></span> Generalization</p>
-            <h2>Pruning gains scale with sensor redundancy.</h2>
-            <p>
-              T3R is strongest when multiple views provide overlapping evidence.
-              Single-camera tasks offer less redundancy and less room for
-              aggressive pruning.
-            </p>
-          </div>
+      <section class="content-section page-width" id="generalization">
+        <div class="section-heading">
+          <p class="section-kicker">Cross-backbone evaluation</p>
+          <h2>The benefit grows with visual redundancy.</h2>
+          <p>
+            T3R transfers without fine-tuning to CogACT and π0.5. Aggressive
+            pruning has less headroom with one camera, but is especially
+            effective when several views contain overlapping evidence.
+          </p>
+        </div>
 
-          <div class="camera-grid">
-            <article class="camera-card reveal">
-              <div class="camera-count" role="img" aria-label="One camera">
-                <span></span>
-              </div>
-              <p class="stage-kicker">1 camera · CogACT</p>
-              <h3>SIMPLER</h3>
-              <p>
-                At 60% keep, T3R matches the 10.4% Bridge baseline but trails
-                Google Robot by 5.5 points.
-              </p>
-            </article>
-            <article class="camera-card active reveal" data-delay="1">
-              <div class="camera-count" role="img" aria-label="Two cameras">
-                <span></span><span></span>
-              </div>
-              <p class="stage-kicker">2 cameras · OpenVLA-OFT</p>
-              <h3>LIBERO</h3>
-              <p>
-                T3R retains 96% success at 85% scene-camera reduction and
-                improves robustness under object-placement shift.
-              </p>
-            </article>
-            <article class="camera-card reveal" data-delay="2">
-              <div class="camera-count" role="img" aria-label="Three cameras">
-                <span></span><span></span><span></span>
-              </div>
-              <p class="stage-kicker">3 cameras · π0.5</p>
-              <h3>RoboTwin</h3>
-              <p>
-                The norm-saliency adaptation reaches 38.3% at 62.5% keep,
-                exceeding the 33.4% unpruned baseline.
-              </p>
-            </article>
-          </div>
-
-          <div class="cross-table cogact-table reveal">
-            <div class="cross-table-heading">
-              <div>
-                <p class="stage-kicker">CogACT · SIMPLER</p>
-                <h3>Single-camera transfer</h3>
-              </div>
-              <p>Average success rate (%)</p>
+        <div class="cross-results">
+          <article class="table-card">
+            <div class="table-title accent-blue">
+              <strong>CogACT · SIMPLER</strong>
+              <span>Single-camera average success rate (%)</span>
             </div>
             <div class="table-scroll">
               <table>
@@ -535,21 +437,21 @@
                     <th>Method</th>
                     <th>Keep ratio</th>
                     <th>Google Robot</th>
-                    <th>WidowX/Bridge</th>
+                    <th>WidowX / Bridge</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Baseline</td>
                     <td>100%</td>
-                    <td class="best">73.2</td>
+                    <td><strong>73.2</strong></td>
                     <td>10.4</td>
                   </tr>
                   <tr>
                     <td>ADP</td>
                     <td>75% / ~87%</td>
                     <td>71.0</td>
-                    <td class="best">16.7</td>
+                    <td><strong>16.7</strong></td>
                   </tr>
                   <tr>
                     <td>FastV</td>
@@ -563,7 +465,7 @@
                     <td>69.5</td>
                     <td>12.5</td>
                   </tr>
-                  <tr>
+                  <tr class="ours">
                     <td>T3R</td>
                     <td>60%</td>
                     <td>67.7</td>
@@ -572,25 +474,18 @@
                 </tbody>
               </table>
             </div>
-            <p class="table-note">
-              With one view, aggressive pruning has less redundant visual
-              evidence to remove.
-            </p>
-          </div>
+          </article>
 
-          <div class="cross-table reveal">
-            <div class="cross-table-heading">
-              <div>
-                <p class="stage-kicker">π0.5 · RoboTwin</p>
-                <h3>Three-camera token budget sweep</h3>
-              </div>
-              <p>Unpruned baseline: 33.4%</p>
+          <article class="table-card">
+            <div class="table-title accent-mint">
+              <strong>π0.5 · RoboTwin</strong>
+              <span>Three cameras; unpruned baseline = 33.4%</span>
             </div>
             <div class="table-scroll">
               <table>
                 <thead>
                   <tr>
-                    <th>Tokens/camera</th>
+                    <th>Tokens / camera</th>
                     <th>Keep</th>
                     <th>T3R</th>
                     <th>ADP</th>
@@ -602,7 +497,7 @@
                   <tr>
                     <td>64</td>
                     <td>25%</td>
-                    <td class="best">13.3</td>
+                    <td><strong>13.3</strong></td>
                     <td>13.3</td>
                     <td>11.7</td>
                     <td>3.3</td>
@@ -610,7 +505,7 @@
                   <tr>
                     <td>96</td>
                     <td>37.5%</td>
-                    <td class="best">25.0</td>
+                    <td><strong>25.0</strong></td>
                     <td>13.3</td>
                     <td>23.3</td>
                     <td>11.7</td>
@@ -618,15 +513,15 @@
                   <tr>
                     <td>128</td>
                     <td>50%</td>
-                    <td class="best">33.3</td>
+                    <td><strong>33.3</strong></td>
                     <td>19.4</td>
                     <td>18.1</td>
                     <td>13.9</td>
                   </tr>
-                  <tr>
+                  <tr class="ours">
                     <td>160</td>
                     <td>62.5%</td>
-                    <td class="best">38.3</td>
+                    <td><strong>38.3</strong></td>
                     <td>25.0</td>
                     <td>28.3</td>
                     <td>15.0</td>
@@ -634,7 +529,7 @@
                   <tr>
                     <td>192</td>
                     <td>75%</td>
-                    <td class="best">62.5</td>
+                    <td><strong>62.5</strong></td>
                     <td>33.4</td>
                     <td>37.5</td>
                     <td>20.9</td>
@@ -643,107 +538,128 @@
               </table>
             </div>
             <p class="table-note">
-              The π0.5 transfer uses norm-saliency selection with original
-              position preservation; the OpenVLA-OFT IG-bias stage is not used
-              for these reported results.
+              The π0.5 port uses norm-saliency selection while preserving
+              original token positions; the OpenVLA-OFT attention-bias stage is
+              not used for these reported results.
             </p>
-          </div>
+          </article>
         </div>
       </section>
 
-      <section class="detail-band">
-        <div class="section-shell detail-grid">
-          <div class="detail-copy reveal">
-            <p class="eyebrow"><span></span> Selection quality</p>
-            <h2>
-              Similarity alone is noisy. Spatial agreement makes it useful.
-            </h2>
-            <p>
-              T3R clusters high-scoring points before segmentation, suppressing
-              isolated background matches and producing a tighter object mask.
-            </p>
-          </div>
-          <figure class="figure-card reveal" data-delay="1">
-            <img
-              src="assets/images/selection.webp"
-              alt="Comparison of naive top-scoring points with spatially clustered prompts for segmentation"
-              width="1700"
-              height="1136"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </div>
-      </section>
-
-      <section class="paper-section section-shell" id="paper">
-        <div class="paper-grid">
-          <div class="section-intro reveal">
-            <p class="eyebrow"><span></span> Abstract</p>
-            <h2>Training-free refinement for efficient VLA inference.</h2>
-          </div>
-          <div class="abstract-copy reveal" data-delay="1">
-            <p>
-              Vision-Language-Action models process hundreds of visual tokens at
-              every decision step, increasing latency while allowing irrelevant
-              context to distract action prediction. T3R addresses two
-              complementary forms of redundancy: spatially irrelevant visual
-              tokens and misallocated attention over the remaining sequence.
-            </p>
-            <p>
-              Stage 1 removes irrelevant patches before decoder entry using
-              segmentation-guided pruning. Stage 2 applies saliency-guided
-              attention biasing to emphasize action-critical evidence. Across
-              OpenVLA-OFT, CogACT, and π0.5, the results show that token
-              refinement can improve the efficiency and robustness of VLA
-              inference without retraining.
-            </p>
-          </div>
-        </div>
-
-        <div class="limitations reveal">
-          <p class="stage-kicker">Scope</p>
+      <section class="content-section page-width" id="videos">
+        <div class="section-heading">
+          <p class="section-kicker">Visual explanations</p>
+          <h2>Method and result walkthroughs.</h2>
           <p>
-            Experiments are simulation-based. Benefits are strongest in
-            multi-camera settings; aggressive irreversible pruning can be less
-            effective for single-camera or multi-phase tasks, and segmentation
-            errors can remove necessary evidence.
+            These short videos animate figures from the paper. They explain the
+            pipeline and measured trends; they are not robot-rollout footage.
           </p>
         </div>
+
+        <div class="video-grid">
+          <figure class="video-card">
+            <video
+              muted
+              loop
+              playsinline
+              controls
+              preload="metadata"
+              poster="assets/images/pruning-qualitative.webp"
+              aria-label="Animated explanation of T3R visual-token pruning"
+            >
+              <source
+                src="assets/videos/pruning-walkthrough.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <figcaption>
+              <strong>Segmentation-guided pruning</strong>
+              <span>Similarity → spatial clustering → mask → retained tokens</span>
+            </figcaption>
+          </figure>
+
+          <figure class="video-card">
+            <video
+              muted
+              loop
+              playsinline
+              controls
+              preload="metadata"
+              poster="assets/images/pipeline.webp"
+              aria-label="Animated overview of T3R and its measured results"
+            >
+              <source
+                src="assets/videos/results-overview.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <figcaption>
+              <strong>Why two-stage refinement helps</strong>
+              <span>Attention concentration, efficiency, and OOD robustness</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <figure class="academic-figure wide-figure qualitative">
+          <img
+            src="assets/images/pruning-qualitative.webp"
+            alt="Qualitative comparison of T3R and TeamVLA token selection on a LIBERO scene"
+            width="1500"
+            height="1500"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            <strong>Qualitative token selection.</strong>
+            T3R keeps a compact, instruction-conditioned region while TeamVLA
+            retains most of the scene.
+          </figcaption>
+        </figure>
       </section>
 
-      <section class="citation-band" id="citation">
-        <div class="section-shell citation-grid">
-          <div class="section-intro light reveal">
-            <p class="eyebrow"><span></span> Citation</p>
-            <h2>Use T3R in your research.</h2>
+      <section class="content-section narrow" id="limitations">
+        <h2>Scope and limitations</h2>
+        <p>
+          The experiments are simulation-based. Benefits are strongest in
+          multi-camera settings, where views provide redundant evidence.
+          Aggressive irreversible pruning can be less effective in single-camera
+          or multi-phase tasks, and segmentation errors can remove necessary
+          evidence. On LIBERO-Object, for example, T3R underperforms TeamVLA when
+          similarity splits between a source object and a visually dominant
+          destination.
+        </p>
+      </section>
+
+      <section class="citation-section" id="citation">
+        <div class="page-width citation-grid">
+          <div>
+            <p class="section-kicker">Citation</p>
+            <h2>Cite T3R</h2>
             <p>
-              The arXiv button will activate after the camera-ready manuscript
-              is approved and uploaded.
+              The paper button will link to arXiv after the camera-ready
+              manuscript is approved and uploaded.
             </p>
-            <div class="hero-actions">
+            <div class="paper-links left-aligned">
               <a
-                class="button button-light is-pending"
+                class="pill-button light-button is-pending"
                 data-paper-link
                 href="#citation"
               >
                 <span data-paper-label>Paper coming soon</span>
               </a>
               <a
-                class="button button-outline-light"
-                href="https://github.com/midotronn/t3r"
+                class="pill-button outline-button"
+                href="https://github.com/midotronn/openvla-oft"
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub code ↗
+                GitHub code
               </a>
             </div>
           </div>
 
-          <div class="citation-card reveal" data-delay="1">
-            <button class="copy-button" type="button" data-copy-citation>
-              Copy BibTeX
-            </button>
+          <div class="bibtex-card">
+            <button type="button" data-copy-citation>Copy BibTeX</button>
             <pre><code id="bibtex">@inproceedings{hassan2027t3r,
   title     = {T3R: Training-Free Two-Stage Token
                Refinement Towards Efficient and Robust
@@ -759,12 +675,14 @@
       </section>
     </main>
 
-    <footer>
-      <div>
-        <a class="wordmark" href="#top">T<span>3</span>R</a>
-        <p>Training-Free Two-Stage Token Refinement</p>
-      </div>
-      <p>ASP-DAC 2027 · Built as a static GitHub Pages site.</p>
+    <footer class="page-footer">
+      <a href="#top" aria-label="T3R, back to the top">T<sup>3</sup>R</a>
+      <p>
+        ASP-DAC 2027 · Code and website hosted together at
+        <a href="https://github.com/midotronn/openvla-oft"
+          >midotronn/openvla-oft</a
+        >.
+      </p>
     </footer>
   </body>
 </html>

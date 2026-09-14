@@ -3,7 +3,12 @@
 Static GitHub Pages site for **T3R: Training-Free Two-Stage Token Refinement
 Towards Efficient and Robust VLA Models**.
 
-Live site: <https://midotronn.github.io/t3r/>
+The website is published from the `gh-pages` branch of the same repository as
+the research code.
+
+Live site: <https://midotronn.github.io/openvla-oft/>
+
+Code: <https://github.com/midotronn/openvla-oft>
 
 ## Updating the paper link
 
