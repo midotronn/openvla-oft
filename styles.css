@@ -390,18 +390,6 @@ tr.ours {
   margin-top: 3.2rem;
 }
 
-.runtime-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-
-.runtime-panel h4 {
-  margin: 0 0 0.65rem;
-  font-size: 1rem;
-  text-align: center;
-}
-
 .table-description {
   margin-bottom: 0.8rem;
   text-align: center;
@@ -493,10 +481,6 @@ footer p {
   }
 
   .method-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .runtime-grid {
     grid-template-columns: 1fr;
   }
 
