@@ -17,9 +17,9 @@ the OpenVLA-OFT implementation; transfer experiments are available on the
 
 T3R is applied at inference time on top of a pretrained OpenVLA-OFT checkpoint (no retraining required). It combines two components:
 
-1. **SigLIP-SAM Token Pruning** — Uses SigLIP text-image cosine similarity to identify task-relevant image patches, then generates a segmentation mask via EfficientTAM to physically remove irrelevant vision tokens (~85% pruned from the third-person camera image).
+1. **SigLIP-SAM Token Pruning:** Uses SigLIP text-image cosine similarity to identify task-relevant image patches, then generates a segmentation mask via EfficientTAM to physically remove irrelevant vision tokens (~85% pruned from the third-person camera image).
 
-2. **IG Attention Biasing** — Computes Integrated Gradients saliency over text tokens once per episode, then injects an additive bias into the attention mechanism at layers 8–23 to steer action token attention toward high-saliency instruction tokens.
+2. **IG Attention Biasing:** Computes Integrated Gradients saliency over text tokens once per episode, then injects an additive bias into the attention mechanism at layers 8–23 to steer action token attention toward high-saliency instruction tokens.
 
 ## Results Reported in the Paper
 
@@ -32,8 +32,8 @@ removed before decoder execution.
 |---|---:|---:|---:|
 | Baseline | 0% | **97%** | 107.5 ms |
 | TeamVLA | ~15% | 94% | 102.6 ms |
-| FastV | 85% | 14% | — |
-| ADP | 85% | 66% | — |
+| FastV | 85% | 14% | Not reported |
+| ADP | 85% | 66% | Not reported |
 | **T3R** | **85%** | **96%** | **92.5 ms** |
 
 T3R also matches the unpruned baseline within one percentage point on
@@ -78,7 +78,7 @@ their linked branches.
 
 ### 1. Create the Pod
 
-- **GPU**: 1× L40S 48GB (or A100/H100 — anything with ≥16GB VRAM works for inference)
+- **GPU**: 1× L40S 48GB (or A100/H100; any GPU with ≥16GB VRAM works for inference)
 - **Base image**: `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`
 - **Disk**: 50GB+ (model checkpoint is ~14GB, downloaded automatically from HuggingFace)
 
@@ -331,7 +331,7 @@ These issues were discovered during reproduction testing. The setup script above
 
 ### 4. Missing `hydra-core` for EfficientTAM
 
-**Symptom**: `ModuleNotFoundError: No module named 'hydra'` — EfficientTAM silently falls back to SAM (which also fails), and evaluation runs **without token pruning** while still logging as if everything is fine.
+**Symptom**: `ModuleNotFoundError: No module named 'hydra'`. EfficientTAM silently falls back to SAM (which also fails), and evaluation runs **without token pruning** while still logging as if everything is fine.
 
 **Cause**: EfficientTAM uses Hydra for config loading but doesn't list it as a dependency.
 
@@ -349,7 +349,7 @@ If you instead see `⚠ Warning: Could not load EfficientTAM`, pruning is **NOT 
 
 **Symptom**: Episode 1 hangs at `Computing image embeddings for the provided image...` for several minutes with many triton autotuning messages.
 
-**Cause**: EfficientTAM uses `torch.compile` by default. The first forward pass triggers Triton kernel compilation and autotuning. You may see `OutOfMemoryError: out of resource` messages during autotuning — these are expected (Triton is testing large kernel configs and falling back to smaller ones).
+**Cause**: EfficientTAM uses `torch.compile` by default. The first forward pass triggers Triton kernel compilation and autotuning. You may see `OutOfMemoryError: out of resource` messages during autotuning. These are expected because Triton is testing large kernel configs and falling back to smaller ones.
 
 **Fix**: This is a one-time cost. All subsequent episodes run at normal speed. No action needed.
 
