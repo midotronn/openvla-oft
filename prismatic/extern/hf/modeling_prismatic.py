@@ -435,13 +435,57 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
         all_actions_mask = current_action_mask | next_actions_mask  # (B, seq_len)
         return all_actions_mask
 
-    def _process_vision_features(self, pixel_values, language_embeddings=None, use_film=False):
-        """Process vision features with optional FiLM conditioning"""
+    def _process_vision_features(self, pixel_values, language_embeddings=None, use_film=False, patch_mask=None):
+        """Process vision features with optional FiLM conditioning and patch masking.
+        
+        Args:
+            pixel_values: (B, C, H, W) or (B, 2*C, H, W) for dual image input
+            language_embeddings: Optional language embeddings for FiLM conditioning
+            use_film: Whether to use FiLM conditioning
+            patch_mask: Optional (num_patches,) boolean tensor for the first image. 
+                        True means keep the patch, False means discard.
+                        Only applied to the first (third-person) image patches.
+        
+        Returns:
+            projected_patch_embeddings: (bsz, num_selected_patches, llm_dim)
+        """
         if use_film:
             # FiLM: Infuse language inputs into visual features
             patch_features = self.vision_backbone(pixel_values, language_embeddings)  # (bsz, 256 * num_images, D)
         else:
             patch_features = self.vision_backbone(pixel_values)  # (bsz, 256 * num_images, D)
+
+        # Apply patch mask for token pruning if provided
+        if patch_mask is not None:
+            bsz = patch_features.shape[0]
+            num_patches_per_image = self.vision_backbone.get_num_patches()  # 256 for 224x224 with patch_size=14
+            num_images = self.vision_backbone.get_num_images_in_input()  # 1 or 2
+            
+            # patch_mask is for the first (third-person) image only
+            # Shape: (num_patches_per_image,) boolean tensor
+            patch_mask = patch_mask.to(patch_features.device)
+            
+            if num_images == 1:
+                # Single image: apply mask directly
+                # patch_features: (bsz, 256, D)
+                # Expand mask for batch dimension
+                expanded_mask = patch_mask.unsqueeze(0).expand(bsz, -1)  # (bsz, 256)
+                # Select patches where mask is True
+                # We need to handle variable number of selected patches
+                # For simplicity, use masked_select with padding or keep fixed shape
+                patch_features = patch_features[:, patch_mask, :]  # (bsz, num_selected, D)
+            else:
+                # Dual image input: mask only applies to first image (third-person)
+                # patch_features: (bsz, 256 * 2, D) = (bsz, 512, D)
+                # First 256 are third-person, last 256 are wrist
+                third_person_features = patch_features[:, :num_patches_per_image, :]  # (bsz, 256, D)
+                wrist_features = patch_features[:, num_patches_per_image:, :]  # (bsz, 256, D)
+                
+                # Apply mask to third-person features
+                third_person_features = third_person_features[:, patch_mask, :]  # (bsz, num_selected, D)
+                
+                # Concatenate: selected third-person + all wrist
+                patch_features = torch.cat([third_person_features, wrist_features], dim=1)
 
         # Project patch embeddings into language embedding space
         return self.projector(patch_features)
@@ -494,6 +538,71 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
             )
             return torch.cat([labels[:, :1], projected_patch_labels, labels[:, 1:]], dim=1)
         return None
+
+    _cached_position_ids: Optional[torch.Tensor] = None
+    _cached_position_ids_key: Optional[tuple] = None
+    _cached_mask_selected: Optional[int] = None
+
+    def _build_pruning_position_ids(
+        self,
+        patch_mask: torch.Tensor,
+        num_patches_per_image: int,
+        num_images: int,
+        use_proprio: bool,
+        num_text_action_tokens: int,
+        device: torch.device,
+    ) -> torch.Tensor:
+        """Build position_ids that preserve original token positions when patches are pruned.
+
+        During training the multimodal layout is:
+          [BOS(0)] [3rd_person(1..256)] [wrist(257..512)] [proprio(513)] [text+action(514..)]
+
+        When pruning removes patches, the physical sequence shortens but we assign
+        each token its ORIGINAL position so that RoPE encoding stays consistent with
+        what the model learned.
+
+        Caches result keyed on the actual mask content (number of selected patches
+        and their indices) rather than tensor memory address, which can be reused
+        by the allocator after the old tensor is freed.
+        """
+        num_selected = int(patch_mask.sum().item())
+        cache_key = (num_selected, num_patches_per_image, num_images, use_proprio, num_text_action_tokens)
+        if (
+            self._cached_position_ids is not None
+            and self._cached_position_ids_key == cache_key
+            and self._cached_mask_selected == num_selected
+        ):
+            return self._cached_position_ids
+
+        positions = []
+
+        positions.append(torch.tensor([0], device=device, dtype=torch.long))
+
+        selected_indices = torch.where(patch_mask)[0].to(device)
+        positions.append(selected_indices + 1)
+
+        if num_images > 1:
+            wrist_start = 1 + num_patches_per_image
+            positions.append(torch.arange(wrist_start, wrist_start + num_patches_per_image,
+                                          device=device, dtype=torch.long))
+
+        if use_proprio:
+            proprio_pos = 1 + num_patches_per_image * num_images
+            positions.append(torch.tensor([proprio_pos], device=device, dtype=torch.long))
+
+        original_visual_count = num_patches_per_image * num_images
+        if use_proprio:
+            original_visual_count += 1
+        original_text_start = 1 + original_visual_count
+        positions.append(torch.arange(original_text_start,
+                                      original_text_start + num_text_action_tokens,
+                                      device=device, dtype=torch.long))
+
+        result = torch.cat(positions).unsqueeze(0)
+        self._cached_position_ids = result
+        self._cached_position_ids_key = cache_key
+        self._cached_mask_selected = num_selected
+        return result
 
     # === Core Prismatic VLM `forward()` Logic ===
     def forward(
@@ -802,6 +911,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         NUM_PATCHES,
         NUM_PROMPT_TOKENS,
         noisy_action_projector,
+        position_ids=None,
     ):
         """Run diffusion-based action prediction"""
         # Clone embedding for reuse in each timestep
@@ -847,7 +957,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             language_model_output = self.language_model(
                 input_ids=None,
                 attention_mask=multimodal_attention_mask,
-                position_ids=None,
+                position_ids=position_ids,
                 past_key_values=None,
                 inputs_embeds=multimodal_embeddings,
                 labels=None,
@@ -874,6 +984,146 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         # Return final actions
         return curr_noisy_actions.float().cpu().detach().numpy(), actions_hidden_states
 
+    def _forward_with_token_merging(
+        self,
+        multimodal_embeddings,
+        multimodal_attention_mask,
+        projected_patch_embeddings,
+        language_embeddings,
+        token_pruning_config,
+    ):
+        """Forward pass with TEAM-VLA token merging at an intermediate decoder layer.
+
+        At decoder layer k (merge_layer), visual hidden states are compressed via
+        soft bipartite matching guided by language tokens, then the remaining layers
+        continue with the shorter sequence.
+
+        When the attention mask has no padding (all 1s), we pass None to each decoder
+        layer so that SDPA dispatches to flash attention via is_causal=True.
+        """
+        from prismatic.models.token_pruning import apply_token_merging
+        from transformers.modeling_outputs import CausalLMOutputWithPast
+
+        merge_layer = token_pruning_config.merge_layer
+
+        if hasattr(self.language_model, 'model') and hasattr(self.language_model.model, 'layers'):
+            decoder_layers = self.language_model.model.layers
+            norm = self.language_model.model.norm
+            lm_head = self.language_model.lm_head
+        else:
+            return self.language_model(
+                input_ids=None,
+                attention_mask=multimodal_attention_mask,
+                position_ids=None,
+                past_key_values=None,
+                inputs_embeds=multimodal_embeddings,
+                labels=None,
+                use_cache=None,
+                output_attentions=False,
+                output_hidden_states=True,
+                return_dict=True,
+            )
+
+        num_layers = len(decoder_layers)
+        merge_layer = min(merge_layer, num_layers - 1)
+
+        all_hidden_states = [multimodal_embeddings]
+        hidden_states = multimodal_embeddings
+
+        batch_size, seq_length = hidden_states.shape[:2]
+        position_ids = torch.arange(
+            0, seq_length, dtype=torch.long, device=hidden_states.device
+        ).unsqueeze(0).expand(batch_size, -1)
+
+        # When the mask has no padding (all 1s), pass None so SDPA can use
+        # is_causal=True and dispatch to the flash-attention kernel.
+        can_use_flash = (
+            multimodal_attention_mask is None
+            or multimodal_attention_mask.all()
+        )
+
+        if can_use_flash:
+            layer_attn_mask = None
+        else:
+            layer_attn_mask = multimodal_attention_mask[:, None, None, :]
+            layer_attn_mask = layer_attn_mask.to(dtype=hidden_states.dtype)
+            layer_attn_mask = (1.0 - layer_attn_mask) * torch.finfo(hidden_states.dtype).min
+
+        # Forward through layers before merge_layer
+        for idx in range(merge_layer):
+            layer_outputs = decoder_layers[idx](
+                hidden_states,
+                attention_mask=layer_attn_mask,
+                position_ids=position_ids,
+                past_key_value=None,
+                output_attentions=False,
+                use_cache=False,
+            )
+            hidden_states = layer_outputs[0]
+            all_hidden_states.append(hidden_states)
+
+        # Apply token merging at merge_layer
+        if token_pruning_config.use_token_merging and language_embeddings is not None:
+            num_patches = projected_patch_embeddings.shape[1]
+            num_lang = language_embeddings.shape[1]
+            visual_hidden = hidden_states[:, 1:num_patches + 1, :]
+            lang_start = num_patches + 1
+            language_hidden = hidden_states[:, lang_start:lang_start + num_lang, :]
+            action_hidden = hidden_states[:, lang_start + num_lang:, :]
+
+            merged_visual = apply_token_merging(
+                image_tokens=visual_hidden,
+                task_tokens=language_hidden,
+                config=token_pruning_config,
+                action_tokens=action_hidden if action_hidden.shape[1] > 0 else None,
+            )
+
+            hidden_states = torch.cat([
+                hidden_states[:, :1, :],
+                merged_visual,
+                hidden_states[:, num_patches + 1:, :],
+            ], dim=1)
+
+            new_seq_length = hidden_states.shape[1]
+            position_ids = torch.arange(
+                0, new_seq_length, dtype=torch.long, device=hidden_states.device
+            ).unsqueeze(0).expand(batch_size, -1)
+
+            if not can_use_flash:
+                new_mask = torch.ones(
+                    batch_size, new_seq_length,
+                    dtype=multimodal_attention_mask.dtype,
+                    device=multimodal_attention_mask.device,
+                )
+                layer_attn_mask = new_mask[:, None, None, :]
+                layer_attn_mask = layer_attn_mask.to(dtype=hidden_states.dtype)
+                layer_attn_mask = (1.0 - layer_attn_mask) * torch.finfo(hidden_states.dtype).min
+
+        # Forward through remaining layers
+        for idx in range(merge_layer, num_layers):
+            layer_outputs = decoder_layers[idx](
+                hidden_states,
+                attention_mask=layer_attn_mask,
+                position_ids=position_ids,
+                past_key_value=None,
+                output_attentions=False,
+                use_cache=False,
+            )
+            hidden_states = layer_outputs[0]
+            all_hidden_states.append(hidden_states)
+
+        hidden_states = norm(hidden_states)
+        all_hidden_states.append(hidden_states)
+        logits = lm_head(hidden_states)
+
+        return CausalLMOutputWithPast(
+            loss=None,
+            logits=logits,
+            past_key_values=None,
+            hidden_states=tuple(all_hidden_states),
+            attentions=None,
+        )
+
     def _regression_or_discrete_prediction(
         self,
         input_embeddings,
@@ -884,6 +1134,9 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         NUM_PATCHES,
         NUM_PROMPT_TOKENS,
         action_head=None,
+        position_ids=None,
+        token_pruning_config=None,
+        language_embeddings=None,
     ):
         """Run L1 regression-based continuous action prediction or discrete action tokens prediction."""
         # Zero out action token embeddings
@@ -895,19 +1148,35 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             input_embeddings, projected_patch_embeddings, attention_mask
         )
 
-        # Forward pass through language model
-        language_model_output = self.language_model(
-            input_ids=None,
-            attention_mask=multimodal_attention_mask,
-            position_ids=None,
-            past_key_values=None,
-            inputs_embeds=multimodal_embeddings,
-            labels=None,
-            use_cache=None,
-            output_attentions=False,
-            output_hidden_states=True,
-            return_dict=True,
+        use_token_merging = (
+            token_pruning_config is not None
+            and token_pruning_config.enabled
+            and token_pruning_config.use_token_merging
         )
+
+        if use_token_merging:
+            language_model_output = self._forward_with_token_merging(
+                multimodal_embeddings,
+                multimodal_attention_mask,
+                projected_patch_embeddings,
+                language_embeddings,
+                token_pruning_config,
+            )
+            NUM_PATCHES = token_pruning_config.merge_topk
+        else:
+            # Standard forward pass through language model
+            language_model_output = self.language_model(
+                input_ids=None,
+                attention_mask=multimodal_attention_mask,
+                position_ids=position_ids,
+                past_key_values=None,
+                inputs_embeds=multimodal_embeddings,
+                labels=None,
+                use_cache=None,
+                output_attentions=False,
+                output_hidden_states=True,
+                return_dict=True,
+            )
 
         # Extract hidden states for action tokens
         last_hidden_states = language_model_output.hidden_states[-1]  # (B, seq_len, D)
@@ -950,6 +1219,8 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         action_head=None,
         noisy_action_projector=None,
         use_film: bool = False,
+        patch_mask: Optional[torch.Tensor] = None,
+        token_pruning_config=None,
         **kwargs: str,
     ) -> np.ndarray:
         """Predict actions from input sequence, with options for different prediction methods.
@@ -962,6 +1233,10 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             action_head: Optional head for L1 regression or diffusion-based prediction
             noisy_action_projector: Projector for noisy actions in diffusion-based prediction
             use_film: Whether to use FiLM conditioning
+            patch_mask: Optional (num_patches,) boolean tensor for SigLIP-SAM pruning.
+                        True means keep the patch, False means discard.
+                        Only applied to the first (third-person) image patches.
+            token_pruning_config: Optional TokenPruningConfig for TEAM-VLA pruning/merging.
             **kwargs: Additional arguments including pixel_values and attention_mask
 
         Returns:
@@ -999,8 +1274,24 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             input_embeddings.shape[0], -1, input_embeddings.shape[2]
         )
 
-        # Process vision features
-        projected_patch_embeddings = self._process_vision_features(pixel_values, language_embeddings, use_film)
+        # Process vision features with optional patch mask for SigLIP-SAM pruning
+        projected_patch_embeddings = self._process_vision_features(
+            pixel_values, language_embeddings, use_film, patch_mask=patch_mask
+        )
+
+        # Apply TEAM-VLA token pruning if enabled (similarity sampling → expanding → context sampling)
+        if token_pruning_config is not None and token_pruning_config.enabled and patch_mask is None:
+            from prismatic.models.token_pruning import apply_token_pruning
+            num_patches_total = projected_patch_embeddings.shape[1]
+            num_images = self.vision_backbone.get_num_images_in_input()
+            num_patches_per_image = num_patches_total // num_images
+            num_patches_per_side = int(num_patches_per_image ** 0.5)
+            projected_patch_embeddings, _ = apply_token_pruning(
+                projected_patch_embeddings, language_embeddings,
+                token_pruning_config,
+                num_patches_per_side=num_patches_per_side,
+                num_images=num_images,
+            )
 
         # Add proprioceptive features if provided
         use_proprio = proprio_projector is not None and proprio is not None
@@ -1014,11 +1305,36 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         use_diffusion = noisy_action_projector is not None and hasattr(action_head, "noise_scheduler")
 
         # Calculate number of patches (including proprio token and/or diffusion timestep embedding if present)
-        NUM_PATCHES = self.vision_backbone.get_num_patches() * self.vision_backbone.get_num_images_in_input()
+        num_patches_per_image = self.vision_backbone.get_num_patches()
+        num_images = self.vision_backbone.get_num_images_in_input()
+        if patch_mask is not None:
+            num_selected_patches = int(patch_mask.sum().item())
+            if num_images == 1:
+                NUM_PATCHES = num_selected_patches
+            else:
+                NUM_PATCHES = num_selected_patches + num_patches_per_image
+        elif token_pruning_config is not None and token_pruning_config.enabled:
+            NUM_PATCHES = projected_patch_embeddings.shape[1]
+        else:
+            NUM_PATCHES = num_patches_per_image * num_images
         if use_proprio:
             NUM_PATCHES += 1
         if use_diffusion:
             NUM_PATCHES += 1
+
+        # Build explicit position_ids to preserve original positional encoding when pruning.
+        # Skipped for diffusion because the timestep embedding alters sequence length per iteration.
+        position_ids = None
+        if patch_mask is not None and not use_diffusion:
+            num_text_action_tokens = input_embeddings.shape[1] - 1
+            position_ids = self._build_pruning_position_ids(
+                patch_mask=patch_mask,
+                num_patches_per_image=num_patches_per_image,
+                num_images=num_images,
+                use_proprio=use_proprio,
+                num_text_action_tokens=num_text_action_tokens,
+                device=input_embeddings.device,
+            )
 
         if use_diffusion:
             # Sample random noise with shape equal to output action, used as the starting state for reverse diffusion
@@ -1038,6 +1354,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                 NUM_PATCHES,
                 NUM_PROMPT_TOKENS,
                 noisy_action_projector,
+                position_ids=position_ids,
             )
         else:
             # Run regression or discrete token-based prediction
@@ -1050,6 +1367,9 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                 NUM_PATCHES,
                 NUM_PROMPT_TOKENS,
                 action_head,
+                position_ids=position_ids,
+                token_pruning_config=token_pruning_config,
+                language_embeddings=language_embeddings,
             )
 
         # Unnormalize predicted actions

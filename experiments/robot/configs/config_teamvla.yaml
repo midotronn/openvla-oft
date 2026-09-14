@@ -1,0 +1,32 @@
+# TeamVLA: Token pruning baseline (density-based pruning + context sampling)
+# Expected: ~94% success rate on libero_spatial (10 tasks x 10 episodes)
+# Uses team/run_libero_eval_team.py instead of run_libero_eval_with_sam.py
+
+pretrained_checkpoint: "moojink/openvla-7b-oft-finetuned-libero-spatial"
+model_family: "openvla"
+
+task_suite_name: "libero_spatial"
+num_trials_per_task: 10
+center_crop: true
+
+# Token pruning
+use_token_pruning: true
+token_density_threshold: 1.0
+token_context_sample_ratio: 0.1
+token_expansion_kernel_size: 3
+
+# Token merging — DISABLED
+use_token_merging: false
+token_merge_topk: 80
+token_merge_layer: 16
+
+# Action head
+use_l1_regression: true
+use_diffusion: false
+use_proprio: true
+use_film: false
+
+# Logging
+use_wandb: false
+local_log_dir: "./experiments/logs"
+seed: 7
