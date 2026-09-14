@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta
       property="og:title"
-      content="T3R — Training-Free Two-Stage Token Refinement"
+      content="T3R: Training-Free Two-Stage Token Refinement"
     >
     <meta
       property="og:description"
@@ -30,7 +30,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta
       name="twitter:title"
-      content="T3R — Training-Free Two-Stage Token Refinement"
+      content="T3R: Training-Free Two-Stage Token Refinement"
     >
     <meta
       name="twitter:description"
@@ -63,12 +63,12 @@
     <link
       rel="preload"
       as="image"
-      href="assets/images/qualitative-retained.webp"
+      href="assets/images/pipeline-clean.webp"
       fetchpriority="high"
     >
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <title>T3R — Training-Free Two-Stage Token Refinement</title>
+    <title>T3R: Training-Free Two-Stage Token Refinement</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -160,27 +160,21 @@
 
     <main id="main">
       <section class="teaser-section">
-        <div class="container desktop-width">
-          <picture>
-            <source
-              media="(max-width: 600px)"
-              srcset="assets/images/qualitative-retained-mobile.webp"
-            >
-            <img
-              class="teaser-image"
-              src="assets/images/qualitative-retained.webp"
-              alt="A three-step T3R example showing the full scene, spatially clustered prompts, and localization of the target bowl"
-              width="1600"
-              height="720"
-              fetchpriority="high"
-            >
-          </picture>
+        <div class="container widescreen-width">
+          <img
+            class="teaser-image"
+            src="assets/images/pipeline-clean.webp"
+            alt="T3R pipeline showing segmentation-guided pruning followed by saliency-guided attention biasing"
+            width="1640"
+            height="953"
+            fetchpriority="high"
+          >
           <p class="teaser-copy">
             We present <strong>T3R</strong>, a training-free framework that
-            removes irrelevant visual patches before decoding and redirects
-            attention toward action-critical evidence. In this example,
-            spatial clustering suppresses background matches and preserves the
-            target bowl named by the instruction.
+            tackles two complementary sources of VLA redundancy. The first
+            stage removes irrelevant visual patches before decoder entry. The
+            second stage redirects action attention toward instruction-critical
+            evidence, improving efficiency and robustness without retraining.
           </p>
         </div>
       </section>
@@ -212,26 +206,7 @@
 
       <section class="paper-section" id="method">
         <div class="container widescreen-width">
-          <h2>Pipeline</h2>
-          <figure class="paper-figure">
-            <img
-              src="assets/images/pipeline-clean.webp"
-              alt="T3R pipeline showing segmentation-guided pruning followed by saliency-guided attention biasing"
-              width="1640"
-              height="953"
-              loading="lazy"
-              decoding="async"
-            >
-            <figcaption>
-              <strong>Stage 1 — pruning.</strong> POS-weighted SigLIP
-              similarity and spatially clustered prompts guide EfficientTAM;
-              only patches intersecting the mask enter the decoder.
-              <strong>Stage 2 — biasing.</strong> Integrated Gradients
-              identifies instruction-salient tokens, and a lightweight
-              additive bias guides action-token queries in decoder layers 8–23.
-            </figcaption>
-          </figure>
-
+          <h2>Method Details</h2>
           <div class="method-columns">
             <div>
               <h3>Segmentation-guided pruning</h3>
@@ -251,6 +226,28 @@
               </p>
             </div>
           </div>
+
+          <figure class="paper-figure qualitative-example">
+            <picture>
+              <source
+                media="(max-width: 600px)"
+                srcset="assets/images/qualitative-retained-mobile.webp"
+              >
+              <img
+                src="assets/images/qualitative-retained.webp"
+                alt="A three-step T3R example showing the full multi-object scene, spatially clustered prompts, and localization of the target bowl"
+                width="1600"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+            </picture>
+            <figcaption>
+              <strong>Qualitative localization.</strong> In this multi-object
+              scene, spatial clustering suppresses background matches and
+              preserves the target bowl named by the instruction.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -290,13 +287,13 @@
                   <td>FastV</td>
                   <td>85%</td>
                   <td>14%</td>
-                  <td>—</td>
+                  <td>N/A</td>
                 </tr>
                 <tr>
                   <td>ADP</td>
                   <td>85%</td>
                   <td>66%</td>
-                  <td>—</td>
+                  <td>N/A</td>
                 </tr>
                 <tr class="ours">
                   <td>T3R (ours)</td>
@@ -488,61 +485,7 @@
         </div>
       </section>
 
-      <section class="paper-section light-section" id="videos">
-        <div class="container widescreen-width">
-          <h2>Visual Walkthroughs</h2>
-          <p class="section-intro">
-            These animations explain the method and measured trends from the
-            paper. They are not robot-rollout footage.
-          </p>
-
-          <div class="video-grid">
-            <figure>
-              <video
-                muted
-                loop
-                playsinline
-                controls
-                preload="metadata"
-                poster="assets/images/qualitative-retained.webp"
-                aria-label="Animated explanation of T3R visual-token pruning"
-              >
-                <source
-                  src="assets/videos/pruning-walkthrough.mp4"
-                  type="video/mp4"
-                >
-              </video>
-              <figcaption>
-                <strong>Segmentation-guided pruning.</strong>
-                Similarity → spatial clustering → mask → retained tokens.
-              </figcaption>
-            </figure>
-
-            <figure>
-              <video
-                muted
-                loop
-                playsinline
-                controls
-                preload="metadata"
-                poster="assets/images/pipeline-clean.webp"
-                aria-label="Animated overview of T3R and its measured results"
-              >
-                <source
-                  src="assets/videos/results-overview.mp4"
-                  type="video/mp4"
-                >
-              </video>
-              <figcaption>
-                <strong>Why two-stage refinement helps.</strong>
-                Attention concentration, efficiency, and OOD robustness.
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      <section class="paper-section" id="limitations">
+      <section class="paper-section light-section" id="limitations">
         <div class="container text-width">
           <h2>Limitations</h2>
           <div class="paper-copy">
@@ -563,7 +506,7 @@
         </div>
       </section>
 
-      <section class="paper-section light-section" id="citation">
+      <section class="paper-section" id="citation">
         <div class="container desktop-width">
           <h2>BibTeX</h2>
           <p class="section-intro">

@@ -10,24 +10,6 @@ document.querySelectorAll("[data-paper-link]").forEach((link) => {
   link.querySelector("[data-paper-label]").textContent = "Paper";
 });
 
-const videoObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      const video = entry.target;
-      if (entry.isIntersecting) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    });
-  },
-  { threshold: 0.2 },
-);
-
-document
-  .querySelectorAll("video")
-  .forEach((video) => videoObserver.observe(video));
-
 const copyButton = document.querySelector("[data-copy-citation]");
 copyButton?.addEventListener("click", async () => {
   const citation = document.querySelector("#bibtex")?.textContent ?? "";

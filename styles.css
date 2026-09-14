@@ -48,8 +48,7 @@ a {
   color: var(--link);
 }
 
-img,
-video {
+img {
   display: block;
   max-width: 100%;
 }
@@ -396,30 +395,6 @@ tr.ours {
   text-align: center;
 }
 
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.4rem;
-}
-
-.video-grid figure {
-  margin: 0;
-}
-
-.video-grid video {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 8px;
-  background: #111111;
-  box-shadow: 0 0.15em 0.7em rgba(0, 0, 0, 0.15);
-}
-
-.video-grid figcaption {
-  margin-top: 0.7rem;
-  color: #363636;
-  text-align: center;
-}
-
 .bibtex {
   position: relative;
   max-width: 780px;
@@ -506,8 +481,7 @@ footer p {
     font-size: 2.4rem;
   }
 
-  .method-columns,
-  .video-grid {
+  .method-columns {
     grid-template-columns: 1fr;
   }
 
