@@ -1,29 +1,9 @@
-# T3R project website
+# T3R project website redirect
 
-Static GitHub Pages site for **T3R: Training-Free Two-Stage Token Refinement
-Towards Efficient and Robust VLA Models**.
+The T3R project website and experiment entry point moved to:
 
-The website is published from the `gh-pages` branch of the same repository as
-the research code.
+- Website: <https://midotronn.github.io/t3r/>
+- Repository: <https://github.com/midotronn/t3r>
 
-Live site: <https://midotronn.github.io/openvla-oft/>
-
-Code: <https://github.com/midotronn/openvla-oft>
-
-## Updating the paper link
-
-After the arXiv submission is public, set `PAPER_URL` at the top of `script.js`.
-All paper buttons will update automatically.
-
-## Local preview
-
-```bash
-python -m http.server 8000
-```
-
-Then open <http://localhost:8000>.
-
-## Fonts
-
-The site self-hosts Acme and Noto Sans. Their SIL Open Font License files
-are included in `assets/fonts/`.
+This branch retains a redirect so existing links to the former
+`midotronn.github.io/openvla-oft/` URL continue to work.

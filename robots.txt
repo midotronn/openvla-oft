@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://midotronn.github.io/openvla-oft/sitemap.xml
+Sitemap: https://midotronn.github.io/t3r/sitemap.xml
