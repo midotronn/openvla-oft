@@ -1,1 +1,4 @@
-from .datasets import DummyDataset, EpisodicRLDSDataset, RLDSBatchTransform, RLDSDataset
+try:
+    from .datasets import DummyDataset, EpisodicRLDSDataset, RLDSBatchTransform, RLDSDataset
+except ImportError:
+    pass
