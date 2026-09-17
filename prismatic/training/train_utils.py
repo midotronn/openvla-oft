@@ -6,8 +6,7 @@ from prismatic.vla.constants import ACTION_DIM, ACTION_TOKEN_BEGIN_IDX, IGNORE_I
 
 
 def get_current_action_mask(token_ids):
-    # Create a tensor marking positions of IGNORE_INDEX
-    newline_positions = token_ids != IGNORE_INDEX
+    newline_positions = (token_ids != IGNORE_INDEX).to(torch.long)
 
     # Calculate cumulative sum to identify regions between newlines
     cumsum = torch.cumsum(newline_positions, dim=1)
@@ -23,8 +22,7 @@ def get_current_action_mask(token_ids):
 
 
 def get_next_actions_mask(token_ids):
-    # Create a tensor marking positions of IGNORE_INDEX
-    newline_positions = token_ids != IGNORE_INDEX
+    newline_positions = (token_ids != IGNORE_INDEX).to(torch.long)
 
     # Calculate cumulative sum to identify regions between newlines
     cumsum = torch.cumsum(newline_positions, dim=1)

@@ -106,6 +106,7 @@ def get_action(
     proprio_projector: Optional[torch.nn.Module] = None,
     noisy_action_projector: Optional[torch.nn.Module] = None,
     use_film: bool = False,
+    token_pruning_config=None,
 ) -> Union[List[np.ndarray], np.ndarray]:
     """
     Query the model to get action predictions.
@@ -120,6 +121,7 @@ def get_action(
         proprio_projector: Optional proprioception projector
         noisy_action_projector: Optional noisy action projector for diffusion
         use_film: Whether to use FiLM
+        token_pruning_config: Optional TokenPruningConfig for TEAM-VLA pruning/merging.
 
     Returns:
         Union[List[np.ndarray], np.ndarray]: Predicted actions
@@ -139,6 +141,7 @@ def get_action(
                 proprio_projector=proprio_projector,
                 noisy_action_projector=noisy_action_projector,
                 use_film=use_film,
+                token_pruning_config=token_pruning_config,
             )
         else:
             raise ValueError(f"Unsupported model family: {cfg.model_family}")
