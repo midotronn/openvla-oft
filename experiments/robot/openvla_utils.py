@@ -12,7 +12,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import json_numpy
 import numpy as np
 import requests
-import tensorflow as tf
+try:
+    import tensorflow as tf
+    _HAS_TF = 'stub' not in getattr(tf, '__version__', '')
+except (ImportError, AttributeError):
+    tf = None
+    _HAS_TF = False
 import torch
 from huggingface_hub import HfApi, hf_hub_download
 from PIL import Image
@@ -31,7 +36,7 @@ from prismatic.vla.constants import (
     ACTION_DIM,
     ACTION_PROPRIO_NORMALIZATION_TYPE,
 )
-from prismatic.vla.datasets.rlds.utils.data_utils import NormalizationType
+from prismatic.vla.constants import NormalizationType
 
 # Initialize important constants
 DATE = time.strftime("%Y_%m_%d")
@@ -278,10 +283,20 @@ def get_vla(cfg: Any) -> torch.nn.Module:
         update_auto_map(cfg.pretrained_checkpoint)
         check_model_logic_mismatch(cfg.pretrained_checkpoint)
 
+    # Load config first so we can propagate attn_implementation to nested text_config.
+    # AutoModelForVision2Seq.from_pretrained only sets the top-level config's
+    # _attn_implementation; the LLaMA text_config keeps "eager" unless we fix it here.
+    model_config = AutoConfig.from_pretrained(
+        cfg.pretrained_checkpoint, trust_remote_code=True,
+    )
+    if hasattr(model_config, "text_config"):
+        model_config.text_config._attn_implementation = "sdpa"
+
     # Load the model
     vla = AutoModelForVision2Seq.from_pretrained(
         cfg.pretrained_checkpoint,
-        # attn_implementation="flash_attention_2",
+        config=model_config,
+        attn_implementation="sdpa",
         torch_dtype=torch.bfloat16,
         load_in_8bit=cfg.load_in_8bit,
         load_in_4bit=cfg.load_in_4bit,
@@ -534,13 +549,22 @@ def resize_image_for_policy(img: np.ndarray, resize_size: Union[int, Tuple[int, 
     if isinstance(resize_size, int):
         resize_size = (resize_size, resize_size)
 
-    # Resize using the same pipeline as in RLDS dataset builder
-    img = tf.image.encode_jpeg(img)  # Encode as JPEG
-    img = tf.io.decode_image(img, expand_animations=False, dtype=tf.uint8)  # Decode back
-    img = tf.image.resize(img, resize_size, method="lanczos3", antialias=True)
-    img = tf.cast(tf.clip_by_value(tf.round(img), 0, 255), tf.uint8)
-
-    return img.numpy()
+    if _HAS_TF:
+        img = tf.image.encode_jpeg(img)
+        img = tf.io.decode_image(img, expand_animations=False, dtype=tf.uint8)
+        img = tf.image.resize(img, resize_size, method="lanczos3", antialias=True)
+        img = tf.cast(tf.clip_by_value(tf.round(img), 0, 255), tf.uint8)
+        return img.numpy()
+    else:
+        from PIL import Image as PILImage
+        import io
+        pil_img = PILImage.fromarray(img)
+        buf = io.BytesIO()
+        pil_img.save(buf, format='JPEG', quality=95)
+        buf.seek(0)
+        pil_img = PILImage.open(buf)
+        pil_img = pil_img.resize((resize_size[1], resize_size[0]), PILImage.LANCZOS)
+        return np.array(pil_img)
 
 
 def crop_and_resize(image: tf.Tensor, crop_scale: float, batch_size: int) -> tf.Tensor:
@@ -603,27 +627,27 @@ def center_crop_image(image: Union[np.ndarray, Image.Image]) -> Image.Image:
     Returns:
         Image.Image: Cropped PIL Image
     """
-    batch_size = 1
     crop_scale = 0.9
 
-    # Convert to TF Tensor if needed
-    if not isinstance(image, tf.Tensor):
-        image = tf.convert_to_tensor(np.array(image))
-
-    orig_dtype = image.dtype
-
-    # Convert to float32 in range [0,1]
-    image = tf.image.convert_image_dtype(image, tf.float32)
-
-    # Apply center crop and resize
-    image = crop_and_resize(image, crop_scale, batch_size)
-
-    # Convert back to original data type
-    image = tf.clip_by_value(image, 0, 1)
-    image = tf.image.convert_image_dtype(image, orig_dtype, saturate=True)
-
-    # Convert to PIL Image
-    return Image.fromarray(image.numpy()).convert("RGB")
+    if _HAS_TF:
+        batch_size = 1
+        if not isinstance(image, tf.Tensor):
+            image = tf.convert_to_tensor(np.array(image))
+        orig_dtype = image.dtype
+        image = tf.image.convert_image_dtype(image, tf.float32)
+        image = crop_and_resize(image, crop_scale, batch_size)
+        image = tf.clip_by_value(image, 0, 1)
+        image = tf.image.convert_image_dtype(image, orig_dtype, saturate=True)
+        return Image.fromarray(image.numpy()).convert("RGB")
+    else:
+        pil_img = Image.fromarray(np.array(image)) if not isinstance(image, Image.Image) else image
+        w, h = pil_img.size
+        side = int(min(w, h) * np.sqrt(crop_scale))
+        left = (w - side) // 2
+        top = (h - side) // 2
+        pil_img = pil_img.crop((left, top, left + side, top + side))
+        pil_img = pil_img.resize((OPENVLA_IMAGE_SIZE, OPENVLA_IMAGE_SIZE), Image.LANCZOS)
+        return pil_img.convert("RGB")
 
 
 def check_image_format(image: Any) -> None:
@@ -722,7 +746,9 @@ def get_vla_action(
     proprio_projector: Optional[torch.nn.Module] = None,
     noisy_action_projector: Optional[torch.nn.Module] = None,
     use_film: bool = False,
-) -> List[np.ndarray]:
+    patch_mask: Optional[torch.Tensor] = None,
+    token_pruning_config=None,
+) -> Union[List[np.ndarray], Tuple[List[np.ndarray], Dict[str, Any]]]:
     """
     Generate action predictions with the VLA policy.
 
@@ -736,9 +762,12 @@ def get_vla_action(
         proprio_projector: Optional proprioception projector
         noisy_action_projector: Optional noisy action projector for diffusion
         use_film: Whether to use FiLM
+        patch_mask: Optional (num_patches,) boolean tensor for token pruning.
+                    If provided, this will be used directly instead of generating from SAM.
+        token_pruning_config: Optional TokenPruningConfig for TEAM-VLA pruning/merging.
 
     Returns:
-        List[np.ndarray]: Predicted actions
+        List[np.ndarray]: Predicted actions (or tuple with debug info if patch_mask is provided)
     """
     with torch.inference_mode():
 
@@ -780,7 +809,13 @@ def get_vla_action(
         # Generate action
         if action_head is None:
             # Standard VLA output (single-image inputs, discrete actions)
-            action, _ = vla.predict_action(**inputs, unnorm_key=cfg.unnorm_key, do_sample=False)
+            action, _ = vla.predict_action(
+                **inputs, 
+                unnorm_key=cfg.unnorm_key, 
+                do_sample=False,
+                patch_mask=patch_mask,
+                token_pruning_config=token_pruning_config,
+            )
         else:
             # Custom action head for continuous actions
             action, _ = vla.predict_action(
@@ -792,10 +827,17 @@ def get_vla_action(
                 noisy_action_projector=noisy_action_projector,
                 action_head=action_head,
                 use_film=use_film,
+                patch_mask=patch_mask,
+                token_pruning_config=token_pruning_config,
             )
-
-    # Return action chunk as list of actions
-    return [action[i] for i in range(len(action))]
+        
+        # Return action chunk as list of actions
+        actions = [action[i] for i in range(len(action))]
+        
+        if patch_mask is not None:
+            return actions, {"patch_mask_active": True}
+        
+        return actions
 
 
 def get_action_from_server(
